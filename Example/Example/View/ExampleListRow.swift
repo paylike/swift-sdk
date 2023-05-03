@@ -18,6 +18,10 @@ struct ExampleListRow: View {
                         self.isActive = true;
                     } label: {
                         Text("Show Example")
+                            .padding(8)
+                            .foregroundColor(Color.white)
+                            .background(Color.accentColor)
+                            .cornerRadius(25)
                     }
                     
                 }
