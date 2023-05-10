@@ -7,31 +7,11 @@
 
 import SwiftUI
 
-extension NumberFormatter {
-    static let currency: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        return formatter
-    }()
-
-    static let currencyEditing: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.groupingSeparator = ""
-        formatter.minimumFractionDigits = NumberFormatter.currency.minimumFractionDigits
-        formatter.maximumFractionDigits = NumberFormatter.currency.maximumFractionDigits
-        return formatter
-    }()
-}
-
 struct ExpiryDateField: View {
-    @State private var expiryDate: String = ""
+    @State private var expiryDate: String?
     
     var body: some View {
-        VStack {
-            Text("Expiry Date")
-            TextField("title", text: $expiryDate)
-        }
+        FormattedTextField("00 / 00", label: "Expiry Date", value: $expiryDate, formatter: ExpiryDateFormatter())
     }
 }
 

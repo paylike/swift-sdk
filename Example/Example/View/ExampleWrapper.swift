@@ -10,7 +10,9 @@ import SwiftUI
 struct ExampleWrapper: View {
     let example: Example
     var body: some View {
-        Text(example.title)
+        VStack {
+            Text(example.title)
+        }
     }
 }
 

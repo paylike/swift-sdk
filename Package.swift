@@ -16,8 +16,11 @@ let package = Package(
     targets: [
         .target(
             name: "PaylikeSDK",
-            dependencies: [
-//                .product(name: "PaylikeEngine", package: "swift-engine")
+            resources: [
+                .process("Assets.xcassets")
+//            ],
+//            dependencies: [
+////                .product(name: "PaylikeEngine", package: "swift-engine")
             ]),
         .testTarget(
             name: "PaylikeSDKTests",
@@ -26,6 +29,7 @@ let package = Package(
                 .product(name: "Swifter", package: "swifter")
             ]
         )
+
     ],
     swiftLanguageVersions: [.v5]
 )
