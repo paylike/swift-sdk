@@ -10,10 +10,14 @@ import SwiftUI
 struct CardNumberField: View {
     @State private var cardNumber: String?
     
+    let placeholder = "0000 0000 0000 0000"
+    let label = "Card number"
+    
     var body: some View {
             HStack {
-                FormattedTextField("0000 0000 0000 0000", label: "Card number", value: $cardNumber, formatter: CardNumberFormatter())
-                Image("visa")
+                StyledTextField(label, textField:
+                                    FormattedTextField(placeholder: placeholder, value: $cardNumber, formatter: CardNumberFormatter()))
+                Image("test1234 non existent image")
             }
     }
 }

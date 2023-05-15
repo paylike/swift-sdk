@@ -10,13 +10,13 @@ import SwiftUI
 struct CardValidationCodeField: View {
     @State private var cvc: String?
     
+    let placeholder = "***"
+    let label = "CVC"
+    
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                FormattedTextField("***", label: "CVC", value: $cvc, formatter: CardValidationCodeFormatter())
-            }
+        StyledTextField(label, textField:
+                            FormattedTextField(placeholder: placeholder, value: $cvc, formatter: CardValidationCodeFormatter()))
         }
-    }
 }
 
 struct CardValidationCodeField_Previews: PreviewProvider {

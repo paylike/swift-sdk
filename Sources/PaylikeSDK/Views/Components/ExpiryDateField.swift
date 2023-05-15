@@ -10,8 +10,11 @@ import SwiftUI
 struct ExpiryDateField: View {
     @State private var expiryDate: String?
     
+    let placeholder = "00 / 00"
+    let label = "Expiry Month/Year"
     var body: some View {
-        FormattedTextField("00 / 00", label: "Expiry Date", value: $expiryDate, formatter: ExpiryDateFormatter())
+        StyledTextField(label, textField:
+                            FormattedTextField(placeholder: placeholder, value: $expiryDate, formatter: ExpiryDateFormatter()))
     }
 }
 
