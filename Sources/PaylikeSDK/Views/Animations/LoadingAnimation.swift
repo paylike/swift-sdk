@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoadingAnimation: View {
-    @State private var animationProgress = 0.0;
+    @State private var toggleAnimation = false;
     
     var color: Color = .blue;
     var lineWidth: CGFloat = 2;
@@ -28,11 +28,14 @@ struct LoadingAnimation: View {
                     
                     path.addArc(center: center, radius: radius, startAngle: .degrees(0), endAngle: .degrees(100), clockwise: false)
                 }.stroke(color, lineWidth: lineWidth)
-                    .rotationEffect(.degrees(animationProgress * 360))
-            }.animation(.easeOut(duration: 3), value: animationProgress)
+                    
+            }
+            .rotationEffect(.degrees(toggleAnimation ? 720 : 0))
+            .animation(Animation.easeInOut(duration: 1.5)
+                .repeatForever(autoreverses: false))
                 .frame(width: 300, height: 300)
             
-            Slider(value: $animationProgress, in: 0.0...1.0)
+            Toggle("Toggle Animation", isOn: $toggleAnimation)
                 .padding()
         }
     }
