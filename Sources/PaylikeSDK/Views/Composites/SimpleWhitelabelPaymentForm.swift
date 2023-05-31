@@ -17,15 +17,18 @@ public struct SimpleWhitelabelPaymentForm: View {
     }
     
     public var body: some View {
-        VStack {
-            CardNumberField(cardNumber: $viewModel.cardNumber, isValid: viewModel.isCardNumberValid)
-            HStack {
-                ExpiryDateField(expiryDate: $viewModel.expiryDate, isValid: viewModel.isExpiryDateValid)
-                CardValidationCodeField(cvc: $viewModel.cvc, isValid: viewModel.isCardVerifiacationCodeValid)
-            }
-            PayButton(viewModel.payButtonViewModel)
-            SecurePaymentLabel(color: Color.PaylikeGreen)
-        }.padding()
+        ZStack {
+            VStack {
+                CardNumberField(cardNumber: $viewModel.cardNumber, isValid: viewModel.isCardNumberValid)
+                HStack {
+                    ExpiryDateField(expiryDate: $viewModel.expiryDate, isValid: viewModel.isExpiryDateValid)
+                    CardValidationCodeField(cvc: $viewModel.cvc, isValid: viewModel.isCardVerifiacationCodeValid)
+                }
+                PayButton(viewModel.payButtonViewModel)
+                SecurePaymentLabel(color: Color.PaylikeGreen)
+            }.padding()
+            LoadingOverlayView().opacity(viewModel.isLoading ? 1.0 : 0.0)
+        }
     }
 }
 

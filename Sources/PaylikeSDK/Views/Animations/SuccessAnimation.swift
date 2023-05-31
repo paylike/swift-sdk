@@ -59,26 +59,31 @@ struct SuccessCircleTransition: Shape {
 }
 
 struct SuccessAnimation: View {
-    var color: Color = .blue;
-    var lineWidth: CGFloat = 2;
-    var animationProgress = 0.0;
+    var color: Color = .blue
+    var lineWidth: CGFloat = 2
+    var animationProgress = 0.0
+    @State var isRotating = 0.0
     
     var body: some View {
-        VStack {
             ZStack {
                 Tick()
                     .stroke(color, lineWidth: lineWidth)
                     .offset(x: 0, y: animationProgress > 0 ? 0 : -100)
                     .animation(Animation.easeOut(duration: 0.7), value: animationProgress)
+                    .opacity(min(animationProgress * 20, 1))
+                    .animation(Animation.linear(duration: 0.3), value: animationProgress)
                 
                 SuccessCircleTransition(animationProgress: animationProgress)
                     .stroke(color, lineWidth: lineWidth)
-                    .rotationEffect(.degrees(animationProgress * 90))
-                    .animation(Animation.easeInOut(duration: 0.6))
+                    .rotationEffect(.degrees(isRotating))
+                    .animation(animationProgress == 0.0 ?
+                               Animation.easeInOut(duration: 1.5).repeatForever(autoreverses: false) :
+                                Animation.easeInOut(duration: 0.6), value: [ animationProgress, isRotating ]
+                    )
+                    .onAppear(perform: {
+                        isRotating = 720.0
+                    })
             }
-            .frame(width: 300, height: 300)
-            
-        }
     }
 }
 
@@ -104,7 +109,7 @@ struct SuccessAnimation_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             WrapperView(color: .green, lineWidth: 4)
-        }
+        }.frame(width: 300, height: 300)
     }
 }
 

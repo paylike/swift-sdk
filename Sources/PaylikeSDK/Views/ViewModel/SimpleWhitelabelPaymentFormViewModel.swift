@@ -27,7 +27,8 @@ public class SimpleWhitelabelPaymentFormViewModel: ObservableObject {
              await engine.addEssentialPaymentData(cardNumber: self.cardNumber, cvc: self.cvc, expiry: self.cardExpiry!)
             engine.addDescriptionPaymentData(paymentAmount: self.amount)
              await self.engine.startPayment()
-            // TODO isLoading = false on success update
+            // TODO isLoading = false only on success
+            isLoading = false
         }
     }
     

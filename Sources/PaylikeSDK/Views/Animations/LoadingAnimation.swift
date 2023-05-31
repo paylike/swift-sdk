@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct LoadingAnimation: View {
-    @State private var toggleAnimation = false;
-    
     var color: Color = .blue;
     var lineWidth: CGFloat = 2;
+    var isRotating: Bool = false
     
     var body: some View {
         VStack {
             ZStack {
                 let width: CGFloat = 300
                 let height = width
-                let radius = width * 0.2;
+                let scale = 0.5
+                let radius = width * 0.2 * scale;
                 let center = CGPoint(x: width * 0.5, y: height * 0.5 )
                 
                 Path { path in
@@ -30,13 +30,10 @@ struct LoadingAnimation: View {
                 }.stroke(color, lineWidth: lineWidth)
                     
             }
-            .rotationEffect(.degrees(toggleAnimation ? 720 : 0))
+            .rotationEffect(.degrees(isRotating ? 720 : 0))
             .animation(Animation.easeInOut(duration: 1.5)
-                .repeatForever(autoreverses: false))
+                .repeatForever(autoreverses: true))
                 .frame(width: 300, height: 300)
-            
-            Toggle("Toggle Animation", isOn: $toggleAnimation)
-                .padding()
         }
     }
 }
