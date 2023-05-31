@@ -10,22 +10,26 @@ let package = Package(
             name: "PaylikeSDK", targets: ["PaylikeSDK"]),
     ],
     dependencies: [
-//        .package(url: "https://github.com/paylike/swift-engine", .upToNextMajor(from: "0.1.0")),
+//        .package(url: "https://github.com/kocsislaci/swift-client", branch: "main"),
+        .package(url: "https://github.com/kocsislaci/swift-engine", branch: "feature/initial-release"),
         .package(url: "https://github.com/httpswift/swifter", .upToNextMajor(from: "1.5.0"))
     ],
     targets: [
         .target(
             name: "PaylikeSDK",
-            resources: [
-                .process("Assets.xcassets")
+//            resources: [
+//                .process("Assets.xcassets")
 //            ],
-//            dependencies: [
-////                .product(name: "PaylikeEngine", package: "swift-engine")
+            dependencies: [
+//                .product(name: "PaylikeClient", package: "swift-client"),
+                .product(name: "PaylikeEngine", package: "swift-engine")
             ]),
         .testTarget(
             name: "PaylikeSDKTests",
             dependencies: [
                 "PaylikeSDK",
+//                .product(name: "PaylikeClient", package: "swift-client"),
+                .product(name: "PaylikeEngine", package: "swift-engine"),
                 .product(name: "Swifter", package: "swifter")
             ]
         )

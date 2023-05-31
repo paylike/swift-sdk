@@ -8,14 +8,13 @@
 import Foundation
 
 struct CardNumberFormatter: TextFieldFormatter {
-    typealias Value = String?
+    typealias Value = String
     
-    func displayString(for value: String?) -> String {
-        guard let value: String = value else { return "" }
+    func displayString(for value: String) -> String {
         return value.separateGrouped()
     }
     
-    func value(from string: String) -> String? {
+    func value(from string: String) -> String {
         return string.onlyNumbers()
     }
 }

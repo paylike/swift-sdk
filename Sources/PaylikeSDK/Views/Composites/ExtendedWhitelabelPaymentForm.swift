@@ -6,21 +6,29 @@
 //
 
 import SwiftUI
+import PaylikeClient
 
 struct ExtendedWhitelabelPaymentForm: View {
     @State private var email: String = "";
     @State private var note: String = "";
+    @State private var cardNumber: String = "";
     
+    @State private var expiryDate: String = "";
+    
+    @State private var cvc: String = "";
+    
+    private var payButtonViewModel = PayButtonViewModel(amount: PaymentAmount(currency: CurrencyCodes.EUR, value: 200, exponent: 0))
+
     var body: some View {
         VStack {
             AdditionalTextField(label: "e-mail", placeholder: "john@doe.com", value: $email)
             AdditionalTextField(label: "Note", placeholder: "additional text", value: $note)
-            CardNumberField()
+            CardNumberField(cardNumber: $cardNumber, isValid: true)
             HStack {
-                ExpiryDateField()
-                CardValidationCodeField()
+                ExpiryDateField(expiryDate: $expiryDate, isValid: true)
+                CardValidationCodeField(cvc: $cvc, isValid: true)
             }
-            PayButton("30$")
+            PayButton(payButtonViewModel)
             SecurePaymentLabel()
         }.padding()
     }

@@ -3,6 +3,6 @@ import XCTest
 
 final class PaylikeSDKTests: XCTestCase {
     func testExample() throws {
-        XCTAssertEqual(SDK().helloSDK, "Hello SDK!")
+        XCTAssertEqual(Paylike().helloSDK, "Hello SDK!")
     }
 }

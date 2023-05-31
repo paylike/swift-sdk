@@ -7,8 +7,13 @@
 
 import SwiftUI
 
+struct CardNumberFieldViewModel {
+    
+}
+
 struct CardNumberField: View {
-    @State private var cardNumber: String?
+    @Binding public var cardNumber: String
+    public var isValid: Bool
     
     let placeholder = "0000 0000 0000 0000"
     let label = "Card number"
@@ -16,14 +21,14 @@ struct CardNumberField: View {
     var body: some View {
             HStack {
                 StyledTextField(label, textField:
-                                    FormattedTextField(placeholder: placeholder, value: $cardNumber, formatter: CardNumberFormatter()))
-                Image("test1234 non existent image")
+                                    FormattedTextField(placeholder: placeholder, value: $cardNumber, formatter: CardNumberFormatter()), isValid: isValid)
+                Image("mastercard")
             }
     }
 }
 
 struct CardNumberField_Previews: PreviewProvider {
     static var previews: some View {
-        CardNumberField()
+        CardNumberField(cardNumber: .constant("4111232234334311"), isValid: true)
     }
 }

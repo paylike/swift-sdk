@@ -8,10 +8,9 @@
 import Foundation
 
 struct ExpiryDateFormatter: TextFieldFormatter {
-    typealias Value = String?
+    typealias Value = String
     
-    func displayString(for value: String?) -> String {
-        guard let value: String = value else { return "" }
+    func displayString(for value: String) -> String {
         if (value.count > 2) {
             let dividerIndex = value.index(value.startIndex, offsetBy: 2)
             let month = value[..<dividerIndex]
@@ -21,7 +20,7 @@ struct ExpiryDateFormatter: TextFieldFormatter {
         return value
     }
     
-    func value(from string: String) -> String? {
+    func value(from string: String) -> String {
         return String(string.onlyNumbers().prefix(4))
     }
 }

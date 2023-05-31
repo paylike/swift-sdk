@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct CardValidationCodeField: View {
-    @State private var cvc: String?
+    @Binding public var cvc: String
+    public var isValid: Bool
     
     let placeholder = "***"
     let label = "CVC"
     
     var body: some View {
         StyledTextField(label, textField:
-                            FormattedTextField(placeholder: placeholder, value: $cvc, formatter: CardValidationCodeFormatter()))
+                            FormattedTextField(placeholder: placeholder, value: $cvc, formatter: CardValidationCodeFormatter()), isValid: isValid)
         }
 }
 
 struct CardValidationCodeField_Previews: PreviewProvider {
     static var previews: some View {
-        CardValidationCodeField()
+        CardValidationCodeField(cvc: .constant("321"), isValid: true)
     }
 }

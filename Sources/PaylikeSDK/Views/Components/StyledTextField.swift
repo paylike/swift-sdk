@@ -9,25 +9,31 @@ import SwiftUI
 
 
 public struct StyledTextField<Label>: View where Label : View {
-    public init (_ label: String, textField: TextField<Label>) {
+    public init (_ label: String, textField: TextField<Label>, isValid: Bool = true) {
         self.label = label
         self.textField = textField
+        self.isValid = isValid
     }
     let label: String
     let textField: TextField<Label>
+    let isValid: Bool
     
     public var body: some View {
         VStack(alignment: .leading) {
             Text(label.uppercased())
                 .bold()
             textField.font(.title)
-                .foregroundColor(.green)
+                .foregroundColor(isValid ? Color.PaylikeGreen : Color.PaylikeError)
         }
     }
 }
 
 struct StyledTextField_Previews: PreviewProvider {
     static var previews: some View {
-        StyledTextField("Label", textField: TextField("placeholder", text: .constant("lull")))
+        VStack {
+            StyledTextField("Label", textField: TextField("placeholder", text: .constant("")), isValid: true)
+            StyledTextField("Label", textField: TextField("placeholder", text: .constant("lull")), isValid: true)
+            StyledTextField("Label", textField: TextField("placeholder", text: .constant("invalid")), isValid: false)
+        }
     }
 }

@@ -8,13 +8,13 @@
 import Foundation
 
 struct CardValidationCodeFormatter: TextFieldFormatter {
-    typealias Value = String?
+    typealias Value = String
     
-    func displayString(for value: String?) -> String {
-        return value ?? ""
+    func displayString(for value: String) -> String {
+        return value
     }
     
-    func value(from string: String) -> String? {
+    func value(from string: String) -> String {
         return String(string.onlyNumbers().prefix(3))
     }
 }

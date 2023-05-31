@@ -8,14 +8,24 @@
 import SwiftUI
 
 struct Tick: Shape {
+    var shortSideLength = 0.12
+    var longSideLength = 0.3
+    var centerOffset = 0.07
+    
     func path(in rect: CGRect) -> Path {
         let width: CGFloat = rect.width
         let height = width
+        let center = CGPoint(x:0.5, y: 0.5)
+        
+        
+        let basePoint = center.offsetBy(dx: 0.0, dy: centerOffset)
+        let shortSidePoint = basePoint.offsetBy(dx: -shortSideLength, dy: -shortSideLength)
+        let longSidePoint = basePoint.offsetBy(dx: longSideLength, dy: -longSideLength)
         
         return Path { path in
-            path.move(to: CGPoint(x: width * 0.38, y: height * 0.43 ))
-            path.addLine(to: CGPoint(x: width * 0.5, y: height * 0.55))
-            path.addLine(to: CGPoint(x: width * 0.8, y: height * 0.25))
+            path.move(to: shortSidePoint.multiplyBy(mx: width, my: height))
+            path.addLine(to: basePoint.multiplyBy(mx: width, my: height))
+            path.addLine(to: longSidePoint.multiplyBy(mx: width, my: height))
         }
     }
 }
@@ -96,4 +106,18 @@ struct SuccessAnimation_Previews: PreviewProvider {
             WrapperView(color: .green, lineWidth: 4)
         }
     }
+}
+
+extension CGPoint {
+  /// Retuns the point which is a multiplication of an exsiting point along both axes
+  ///
+  /// - Parameters:
+  ///   - mx: The x-coordinate multiplication to apply.
+  ///   - my: The y-coordinate multiplication to apply.
+  ///
+  /// - Returns:
+  ///   A new point which is a multiplication of an existing point.
+  func multiplyBy(mx: CGFloat, my: CGFloat) -> CGPoint {
+    return CGPoint(x: x * mx, y: y * my)
+  }
 }

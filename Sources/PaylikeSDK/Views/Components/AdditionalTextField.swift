@@ -13,7 +13,7 @@ struct AdditionalTextField: View {
     let value: Binding<String>
     
     var body: some View {
-        StyledTextField(label, textField: TextField(placeholder, text: value))
+        StyledTextField(label, textField: TextField(placeholder, text: value), isValid: true)
     }
 }
 

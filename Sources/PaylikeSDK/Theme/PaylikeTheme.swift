@@ -10,7 +10,11 @@ import SwiftUI
 
 extension Color {
     static var PaylikeGreen: Color {
-        return Color("Paylike Green")
+        return Color(red: 0.180, green: 0.561, blue: 0.161) // return Color("Paylike Green")
+    }
+    
+    static var PaylikeError: Color {
+        return Color(red: 0.8, green: 0.2, blue: 0.2)
     }
     
     static var PaylikeLightGreen: Color {
@@ -18,6 +22,6 @@ extension Color {
     }
     
     static var PaylikeDarkGreen: Color {
-        return Color("Paylike Dark Green")
+        return Color(red: 0, green: 0.376, blue: 0) //Color("Paylike Dark Green")
     }
 }
