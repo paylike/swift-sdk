@@ -20,6 +20,7 @@ public class SimpleWhitelabelPaymentFormViewModel: ObservableObject {
     @Published var amount: PaymentAmount
     
     @Published var isLoading: Bool = false
+    @Published var errorMessage: String?
     
     func submit() async -> Void {
         isLoading = true

@@ -1,5 +1,5 @@
 //
-//  LoadingOverlayView.swift
+//  LoadingOverlay.swift
 //  
 //
 //  Created by Székely Károly on 2023. 05. 31..
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoadingOverlayView: View {
+struct LoadingOverlay: View {
     var color = Color.white
     var lineWidth = 2.0
     
@@ -25,25 +25,24 @@ struct LoadingOverlayView: View {
                     .fill(backgroundGradient)
                     .cornerRadius(15)
                 SuccessAnimation(color: color, lineWidth: lineWidth, animationProgress: animationProgress)
+                    .aspectRatio(1, contentMode: ContentMode.fit)
             }
-                .aspectRatio(1, contentMode: ContentMode.fit)
-                .padding()
         }
     }
 }
 
-struct LandingOverlayPreviewWrapperView: View {
+private struct LandingOverlayPreviewWrapperView: View {
     @State private var startSuccess = false;
     
     var body: some View {
         VStack {
-            LoadingOverlayView(playSuccessAnimation: startSuccess)
+            LoadingOverlay(playSuccessAnimation: startSuccess)
             Toggle("Start Success Animation", isOn: $startSuccess).padding()
         }
     }
 }
 
-struct LoadingOverlayView_Previews: PreviewProvider {
+struct LoadingOverlay_Previews: PreviewProvider {
     static var previews: some View {
         LandingOverlayPreviewWrapperView()
     }

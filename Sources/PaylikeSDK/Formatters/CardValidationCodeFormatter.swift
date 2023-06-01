@@ -15,6 +15,6 @@ struct CardValidationCodeFormatter: TextFieldFormatter {
     }
     
     func value(from string: String) -> String {
-        return String(string.onlyNumbers().prefix(3))
+        return String(string.onlyNumbers().prefix(CARD_VERIFICATION_CODE_LENGTH))
     }
 }

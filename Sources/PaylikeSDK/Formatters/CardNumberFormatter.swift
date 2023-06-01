@@ -15,7 +15,8 @@ struct CardNumberFormatter: TextFieldFormatter {
     }
     
     func value(from string: String) -> String {
-        return string.onlyNumbers()
+        return String(string.onlyNumbers()
+            .prefix(CARD_NUMBER_MAX_LENGTH))
     }
 }
 

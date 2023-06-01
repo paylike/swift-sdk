@@ -19,6 +19,9 @@ public struct SimpleWhitelabelPaymentForm: View {
     public var body: some View {
         ZStack {
             VStack {
+                if viewModel.errorMessage != nil, let message = viewModel.errorMessage {
+                    ErrorLog(message: message)
+                }
                 CardNumberField(cardNumber: $viewModel.cardNumber, isValid: viewModel.isCardNumberValid)
                 HStack {
                     ExpiryDateField(expiryDate: $viewModel.expiryDate, isValid: viewModel.isExpiryDateValid)
@@ -27,7 +30,7 @@ public struct SimpleWhitelabelPaymentForm: View {
                 PayButton(viewModel.payButtonViewModel)
                 SecurePaymentLabel(color: Color.PaylikeGreen)
             }.padding()
-            LoadingOverlayView().opacity(viewModel.isLoading ? 1.0 : 0.0)
+            LoadingOverlay().opacity(viewModel.isLoading ? 1.0 : 0.0)
         }
     }
 }
