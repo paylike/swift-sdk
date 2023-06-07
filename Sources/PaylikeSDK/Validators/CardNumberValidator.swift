@@ -8,6 +8,7 @@
 import Foundation
 import PaylikeLuhn
 
+// TODO update with real min max values
 let CARD_NUMBER_MIN_LENGTH = 16
 let CARD_NUMBER_MAX_LENGTH = 16
 

@@ -22,7 +22,7 @@ struct SuccessAnimation: View {
                     .opacity(min(animationProgress * 20, 1))
                     .animation(Animation.linear(duration: 0.3), value: animationProgress)
                 
-                SuccessCircleTransition(animationProgress: animationProgress)
+                SuccessCircle(animationProgress: animationProgress)
                     .stroke(color, lineWidth: lineWidth)
                     .rotationEffect(.degrees(isRotating))
                     .animation(animationProgress == 0.0 ?

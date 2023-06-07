@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  PaylikeTheme.swift
 //  
 //
 //  Created by Székely Károly on 2023. 05. 10..

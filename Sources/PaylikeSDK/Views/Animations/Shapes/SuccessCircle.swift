@@ -8,7 +8,12 @@
 import Foundation
 import SwiftUI
 
-struct SuccessCircleTransition: Shape {
+struct SuccessCircle: Shape {
+    var startingScale = 0.5
+    var finalCircleRadiusRatio = 0.25
+    var startingArcDegrees = 100.0
+    var animatedArcDegrees = 160.0
+    
     var animationProgress: Double = 0.0
     
     var animatableData: Double {
@@ -20,12 +25,12 @@ struct SuccessCircleTransition: Shape {
         let width: CGFloat = rect.width
         let height = width
         
-        let center = CGPoint(x: width * 0.5, y: height * 0.5 )
+        let center = CGPoint(x: 0.5, y: 0.5 ).multiplyBy(mx: width, my: height)
         
-        let scaleEffect = 0.5 + animationProgress * 0.5;
+        let scaleEffect = startingScale + animationProgress * (1 - startingScale);
         
-        let radius = width * 0.25 * scaleEffect
-        let animatedDegreesOffset = min(100 + 160 * animationProgress, 180)
+        let radius = width * finalCircleRadiusRatio * scaleEffect
+        let animatedDegreesOffset = min(startingArcDegrees + animatedArcDegrees * animationProgress, 180)
         return Path { path in
             path.move(to: center.offsetBy(dx: radius, dy: 0))
             path.addArc(center: center, radius: radius, startAngle: .degrees(0), endAngle: .degrees(animatedDegreesOffset), clockwise: false)

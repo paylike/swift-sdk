@@ -8,7 +8,6 @@
 import Foundation
 import PaylikeEngine
 import PaylikeClient
-import PaylikeLuhn
 
 typealias onSuccessHandler = () -> Void
 typealias onErrorHandler = () -> Void

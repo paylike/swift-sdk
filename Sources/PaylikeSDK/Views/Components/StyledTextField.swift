@@ -16,6 +16,7 @@ public struct StyledTextField<Label>: View where Label : View {
     }
     let label: String
     let textField: TextField<Label>
+    // TODO only show validation error, if the field was already touched
     let isValid: Bool
     
     public var body: some View {

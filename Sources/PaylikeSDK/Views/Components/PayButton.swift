@@ -40,12 +40,11 @@ struct PayButton: View {
     
     var body: some View {
         Button(action: {
-            // async Task disabled for previews: https://developer.apple.com/forums/thread/704455
+            // async Task is disabled for previews: https://developer.apple.com/forums/thread/704455
             if ProcessInfo
                 .processInfo
                 .environment["XCODE_RUNNING_FOR_PREVIEWS"] != "1" {
                 Task {
-                     try await Task.sleep(nanoseconds: 2000000)
                      await viewModel.action()
                 }
             }
