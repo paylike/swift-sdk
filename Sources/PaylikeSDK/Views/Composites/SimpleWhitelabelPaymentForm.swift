@@ -12,7 +12,7 @@ import PaylikeEngine
 public struct SimpleWhitelabelPaymentForm: View {
     @ObservedObject var viewModel: SimpleWhitelabelPaymentFormViewModel
     
-    init(viewModel: SimpleWhitelabelPaymentFormViewModel) {
+    public init(viewModel: SimpleWhitelabelPaymentFormViewModel) {
         self.viewModel = viewModel
     }
     
