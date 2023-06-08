@@ -12,7 +12,11 @@ struct SecurePaymentLabel: View {
     
     var body: some View {
         HStack {
-            Image(systemName: "leaf")
+            Image("paylike-logo", bundle: .module)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxHeight: 30)
+
             Text("Secure payment by Paylike")
         }.foregroundColor(self.color)
     }
@@ -20,6 +24,6 @@ struct SecurePaymentLabel: View {
 
 struct SecurePaymentLabel_Previews: PreviewProvider {
     static var previews: some View {
-        SecurePaymentLabel(color: .red)
+        SecurePaymentLabel(color: .PaylikeGreen)
     }
 }
