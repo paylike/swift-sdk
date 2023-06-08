@@ -18,7 +18,8 @@ let package = Package(
             name: "PaylikeSDK",
             dependencies: [
                 .product(name: "PaylikeEngine", package: "swift-engine")
-            ]),
+            ],
+            resources: [.process("Resources")]),
         .testTarget(
             name: "PaylikeSDKTests",
             dependencies: [
