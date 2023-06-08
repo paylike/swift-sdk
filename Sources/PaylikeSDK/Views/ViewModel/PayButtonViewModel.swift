@@ -14,13 +14,9 @@ public let defaultButtonStyle = PayButtonStyle()
 public class PayButtonViewModel: ObservableObject {
     @Published var amount: PaymentAmount
     @Published var styling: PayButtonStyle
-    private var submit: () async -> Void
+    private (set) var submit: () async -> Void
 
     @Published var disabled: Bool
-    
-    public func action () async {
-        await submit()
-    }
     
     public var displayAmount: String {
         // TODO Localize currency

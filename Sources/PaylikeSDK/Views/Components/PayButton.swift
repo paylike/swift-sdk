@@ -45,7 +45,7 @@ struct PayButton: View {
                 .processInfo
                 .environment["XCODE_RUNNING_FOR_PREVIEWS"] != "1" {
                 Task {
-                     await viewModel.action()
+                     await viewModel.submit()
                 }
             }
         }) {

@@ -15,8 +15,8 @@ struct CardValidationCodeField: View {
     let label = "CVC"
     
     var body: some View {
-        StyledTextField(label, textField:
-                            FormattedTextField(placeholder: placeholder, value: $cvc, formatter: CardValidationCodeFormatter()), isValid: isValid)
+        let formattedField = FormattedTextField(placeholder: placeholder, value: $cvc, formatter: CardValidationCodeFormatter())
+        StyledTextField(label, textField: formattedField, isValid: isValid)
         }
 }
 

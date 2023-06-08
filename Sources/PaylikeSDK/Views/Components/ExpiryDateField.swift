@@ -14,8 +14,8 @@ struct ExpiryDateField: View {
     let placeholder = "00 / 00"
     let label = "Expiry Month/Year"
     var body: some View {
-        StyledTextField(label, textField:
-                            FormattedTextField(placeholder: placeholder, value: $expiryDate, formatter: ExpiryDateFormatter()), isValid: isValid)
+        let formattedField = FormattedTextField(placeholder: placeholder, value: $expiryDate, formatter: ExpiryDateFormatter())
+        StyledTextField(label, textField: formattedField, isValid: isValid)
     }
 }
 

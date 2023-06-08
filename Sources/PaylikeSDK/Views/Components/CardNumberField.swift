@@ -19,11 +19,11 @@ struct CardNumberField: View {
     let label = "Card number"
     
     var body: some View {
-            HStack {
-                StyledTextField(label, textField:
-                                    FormattedTextField(placeholder: placeholder, value: $cardNumber, formatter: CardNumberFormatter()), isValid: isValid)
-                Image("mastercard")
-            }
+        let formattedField = FormattedTextField(placeholder: placeholder, value: $cardNumber, formatter: CardNumberFormatter())
+        HStack {
+            StyledTextField(label, textField: formattedField, isValid: isValid)
+            Image("mastercard", bundle: .module)
+        }
     }
 }
 
