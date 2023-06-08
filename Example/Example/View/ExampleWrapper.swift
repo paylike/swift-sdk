@@ -6,12 +6,20 @@
 //
 
 import SwiftUI
+import PaylikeSDK
+import PaylikeEngine
+import PaylikeClient
 
 struct ExampleWrapper: View {
     let example: Example
-    var body: some View {
-        Text(example.title)
-    }
+    // TODO Refine Paylike interface
+    let viewModel = SimpleWhitelabelPaymentFormViewModel(engine: PaylikeEngine(merchantID: "YOUR_KEY", engineMode: .TEST, loggingMode: .DEBUG), amount: PaymentAmount(currency: CurrencyCodes.BHD, value: 300000, exponent: 2))
+       var body: some View {
+           VStack {
+               Text(example.title)
+               SimpleWhitelabelPaymentForm(viewModel: viewModel)
+           }
+       }
 }
 
 struct ExampleWrapperView_Previews: PreviewProvider {

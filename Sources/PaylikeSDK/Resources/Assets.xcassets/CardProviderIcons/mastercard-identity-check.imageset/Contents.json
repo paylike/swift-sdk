@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "mastercard-identity-check.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
