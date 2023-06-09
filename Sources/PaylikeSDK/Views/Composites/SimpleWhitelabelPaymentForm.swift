@@ -22,9 +22,6 @@ public struct SimpleWhitelabelPaymentForm: View {
                 if viewModel._errorMessage != nil, let message = viewModel._errorMessage {
                     ErrorLog(message: message)
                 }
-                if viewModel.errorMessage != nil, let message = viewModel.errorMessage {
-                    ErrorLog(message: message)
-                }
                 CardNumberField(cardNumber: $viewModel.cardNumber, isValid: viewModel.isCardNumberValid)
                 HStack {
                     ExpiryDateField(expiryDate: $viewModel.expiryDate, isValid: viewModel.isExpiryDateValid)
@@ -37,11 +34,10 @@ public struct SimpleWhitelabelPaymentForm: View {
             LoadingOverlay().opacity(viewModel.isLoading ? 1.0 : 0.0)
                 //.animation(.easeOut(duration: 0.5).delay(1), value: opacity)
             
-            if viewModel.engine.webViewModel!.shouldRenderWebView {
+            if viewModel.shouldRenderWebView {
                 viewModel.engine.webViewModel!.paylikeWebView
                     .frame(maxWidth: .infinity, maxHeight: 400, alignment: .center)
             }
-            Text("DE LOOL: \(viewModel.engine.webViewModel!.shouldRenderWebView ? "Show" : "dont show")")
         }
     }
 }

@@ -27,20 +27,10 @@ public class SimpleWhitelabelPaymentFormViewModel: ObservableObject {
     @Published var amount: PaymentAmount
     
     @Published var isLoading: Bool = false
+    @Published var shouldRenderWebView: Bool = false
     
     @Published var _engineState: EngineState?
     @Published var _errorMessage: String? = nil
-    
-    var errorMessage: String? {
-        return engine.error?.message
-    }
-
-    func ures() {
-        $engine.sink(receiveValue: {e in
-            print("GOOFY WAS HERE, " + (e.error?.message ?? "no error"))
-            self._errorMessage = e.error?.message
-        }).store(in: &cancellables)
-    }
     
     func submit() async -> Void {
         await MainActor.run {
@@ -64,7 +54,40 @@ public class SimpleWhitelabelPaymentFormViewModel: ObservableObject {
         self.onError = { print("onError") }
         self.onSuccess = { print("onSuccess") }
         
-        self.ures()
+        setEngineStateListeners()
+    }
+    
+    func setEngineStateListeners() {
+        self.cancellables.insert(
+            self.engine.state.projectedValue
+                .sink(receiveValue: { state in
+                    Task {
+                        await MainActor.run {
+                            self._engineState = state
+                        }
+                    }
+                })
+        )
+        self.cancellables.insert(
+            self.engine.error.projectedValue
+                .sink(receiveValue: { error in
+                    Task {
+                        await MainActor.run {
+                            self._errorMessage = error?.message
+                        }
+                    }
+                })
+        )
+        self.cancellables.insert(
+            self.engine.webViewModel!.shouldRenderWebView.projectedValue
+                .sink(receiveValue: { shouldRenderWebView in
+                    Task {
+                        await MainActor.run {
+                            self.shouldRenderWebView = shouldRenderWebView
+                        }
+                    }
+                })
+        )
     }
     
     var payButtonViewModel: PayButtonViewModel {
