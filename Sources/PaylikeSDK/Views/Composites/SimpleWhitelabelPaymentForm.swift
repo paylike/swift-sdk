@@ -19,6 +19,9 @@ public struct SimpleWhitelabelPaymentForm: View {
     public var body: some View {
         ZStack {
             VStack {
+                if viewModel._errorMessage != nil, let message = viewModel._errorMessage {
+                    ErrorLog(message: message)
+                }
                 if viewModel.errorMessage != nil, let message = viewModel.errorMessage {
                     ErrorLog(message: message)
                 }
@@ -30,7 +33,15 @@ public struct SimpleWhitelabelPaymentForm: View {
                 PayButton(viewModel.payButtonViewModel)
                 SecurePaymentLabel(color: Color.PaylikeGreen)
             }.padding()
+            
             LoadingOverlay().opacity(viewModel.isLoading ? 1.0 : 0.0)
+                //.animation(.easeOut(duration: 0.5).delay(1), value: opacity)
+            
+            if viewModel.engine.webViewModel!.shouldRenderWebView {
+                viewModel.engine.webViewModel!.paylikeWebView
+                    .frame(maxWidth: .infinity, maxHeight: 400, alignment: .center)
+            }
+            Text("DE LOOL: \(viewModel.engine.webViewModel!.shouldRenderWebView ? "Show" : "dont show")")
         }
     }
 }

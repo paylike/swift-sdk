@@ -8,35 +8,52 @@
 import Foundation
 import PaylikeEngine
 import PaylikeClient
+import Combine
 
 typealias onSuccessHandler = () -> Void
 typealias onErrorHandler = () -> Void
 
 public class SimpleWhitelabelPaymentFormViewModel: ObservableObject {
-    private var engine: PaylikeEngine
+    @Published var engine: PaylikeEngine
     
     private var onSuccess: onSuccessHandler
     private var onError: onErrorHandler
-    
-    @Published var cardNumber: String = "";
-    @Published var expiryDate: String = "";
-    @Published var cvc: String = "";
+    private var cancellables: Set<AnyCancellable> = []
+
+    @Published var cardNumber: String = "4111111111111111";
+    @Published var expiryDate: String = "1231";
+    @Published var cvc: String = "123";
     
     @Published var amount: PaymentAmount
     
     @Published var isLoading: Bool = false
+    
+    @Published var _engineState: EngineState?
+    @Published var _errorMessage: String? = nil
+    
     var errorMessage: String? {
         return engine.error?.message
     }
 
+    func ures() {
+        $engine.sink(receiveValue: {e in
+            print("GOOFY WAS HERE, " + (e.error?.message ?? "no error"))
+            self._errorMessage = e.error?.message
+        }).store(in: &cancellables)
+    }
+    
     func submit() async -> Void {
-        isLoading = true
+        await MainActor.run {
+            isLoading = true
+        }
         if (self.isFormValid()) {
             await engine.addEssentialPaymentData(cardNumber: self.cardNumber, cvc: self.cvc, expiry: self.cardExpiry!)
-            engine.addDescriptionPaymentData(paymentAmount: self.amount, paymentTestData: PaymentTest())
+            engine.addDescriptionPaymentData(paymentAmount: self.amount, paymentTestData: PaymentTest(card: TestCard(status: .DISABLED)))
             await self.engine.startPayment()
-            // TODO isLoading = false only on success
-            isLoading = false
+            await MainActor.run {
+                // TODO isLoading = false only on success
+                isLoading = false
+            }
         }
     }
     
@@ -46,18 +63,20 @@ public class SimpleWhitelabelPaymentFormViewModel: ObservableObject {
         // TODO create empty default handlers
         self.onError = { print("onError") }
         self.onSuccess = { print("onSuccess") }
+        
+        self.ures()
     }
     
-    public var payButtonViewModel: PayButtonViewModel {
+    var payButtonViewModel: PayButtonViewModel {
         let isDisabled = !isFormValid() || isLoading
         return PayButtonViewModel(amount: amount, submit: self.submit, disabled: isDisabled)
     }
     
-    public var isCardNumberValid: Bool {
+    var isCardNumberValid: Bool {
         return validateCardNumber(cardNumber: cardNumber)
     }
     
-    public var cardExpiry: CardExpiry? {
+    var cardExpiry: CardExpiry? {
         if expiryDate.count > 2 {
             let dividerIndex = expiryDate.index(expiryDate.startIndex, offsetBy: 2)
             if let month = Int(expiryDate[..<dividerIndex]) {
@@ -73,11 +92,11 @@ public class SimpleWhitelabelPaymentFormViewModel: ObservableObject {
         return nil
     }
     
-    public var isExpiryDateValid: Bool {
+    var isExpiryDateValid: Bool {
         return validateExpiryDate(cardExpiry: cardExpiry)
     }
     
-    public var isCardVerifiacationCodeValid: Bool {
+    var isCardVerifiacationCodeValid: Bool {
         return validateCardVerificationCode(cvc: cvc)
     }
     

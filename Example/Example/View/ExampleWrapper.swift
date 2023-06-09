@@ -13,7 +13,7 @@ import PaylikeClient
 struct ExampleWrapper: View {
     let example: Example
     // TODO Refine Paylike interface
-    let viewModel = SimpleWhitelabelPaymentFormViewModel(engine: PaylikeEngine(merchantID: "YOUR_KEY", engineMode: .TEST, loggingMode: .DEBUG), amount: PaymentAmount(currency: CurrencyCodes.BHD, value: 300000, exponent: 2))
+    let viewModel = SimpleWhitelabelPaymentFormViewModel(engine: PaylikeEngine(merchantID: "e393f9ec-b2f7-4f81-b455-ce45b02d355d", engineMode: .TEST, loggingMode: .DEBUG), amount: PaymentAmount(currency: CurrencyCodes.EUR, value: 100, exponent: 2))
        var body: some View {
            VStack {
                Text(example.title)
