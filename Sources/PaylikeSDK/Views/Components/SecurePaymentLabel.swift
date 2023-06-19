@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SecurePaymentLabel: View {
-    public var color: Color = Color.green
+    public var color: Color = Color.PaylikeGreen
     
     var body: some View {
         HStack {
@@ -24,6 +24,9 @@ struct SecurePaymentLabel: View {
 
 struct SecurePaymentLabel_Previews: PreviewProvider {
     static var previews: some View {
-        SecurePaymentLabel(color: .PaylikeGreen)
+        VStack {
+            SecurePaymentLabel()
+            SecurePaymentLabel(color: .black)
+        }
     }
 }
