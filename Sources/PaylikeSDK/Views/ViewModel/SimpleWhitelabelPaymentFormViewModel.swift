@@ -10,8 +10,8 @@ import PaylikeEngine
 import PaylikeClient
 import Combine
 
-typealias onSuccessHandler = () -> Void
-typealias onErrorHandler = () -> Void
+public typealias onSuccessHandler = () -> Void
+public typealias onErrorHandler = () -> Void
 
 public class SimpleWhitelabelPaymentFormViewModel: ObservableObject {
     @Published var engine: PaylikeEngine
@@ -20,9 +20,9 @@ public class SimpleWhitelabelPaymentFormViewModel: ObservableObject {
     private var onError: onErrorHandler
     private var cancellables: Set<AnyCancellable> = []
 
-    @Published var cardNumber: String = "4111111111111111";
-    @Published var expiryDate: String = "1231";
-    @Published var cvc: String = "123";
+    @Published var cardNumber: String = "";
+    @Published var expiryDate: String = "";
+    @Published var cvc: String = "";
     
     @Published var amount: PaymentAmount
     
@@ -33,26 +33,22 @@ public class SimpleWhitelabelPaymentFormViewModel: ObservableObject {
     @Published var _errorMessage: String? = nil
     
     func submit() async -> Void {
-        await MainActor.run {
-            isLoading = true
-        }
         if (self.isFormValid()) {
-            await engine.addEssentialPaymentData(cardNumber: self.cardNumber, cvc: self.cvc, expiry: self.cardExpiry!)
-            engine.addDescriptionPaymentData(paymentAmount: self.amount, paymentTestData: PaymentTest(card: TestCard(status: .DISABLED)))
-            await self.engine.startPayment()
             await MainActor.run {
-                // TODO isLoading = false only on success
-                isLoading = false
+                isLoading = true
             }
+            await engine.addEssentialPaymentData(cardNumber: self.cardNumber, cvc: self.cvc, expiry: self.cardExpiry!)
+            engine.addDescriptionPaymentData(paymentAmount: self.amount)
+            await self.engine.startPayment()
         }
     }
     
-    public init(engine: PaylikeEngine, amount: PaymentAmount = PaymentAmount(currency: CurrencyCodes.USD, value: 0, exponent: 0)) {
+    public init(engine: PaylikeEngine, amount: PaymentAmount = PaymentAmount(currency: CurrencyCodes.USD, value: 0, exponent: 0), onError: @escaping onErrorHandler = {}, onSuccess: @escaping onSuccessHandler = {}) {
         self.engine = engine
         self.amount = amount
-        // TODO create empty default handlers
-        self.onError = { print("onError") }
-        self.onSuccess = { print("onSuccess") }
+        
+        self.onError = onError
+        self.onSuccess = onSuccess
         
         setEngineStateListeners()
     }
@@ -64,6 +60,7 @@ public class SimpleWhitelabelPaymentFormViewModel: ObservableObject {
                     Task {
                         await MainActor.run {
                             self._engineState = state
+                            self.onStateChange(state: state)
                         }
                     }
                 })
@@ -125,6 +122,17 @@ public class SimpleWhitelabelPaymentFormViewModel: ObservableObject {
     
     func isFormValid() -> Bool {
         return isCardNumberValid && isExpiryDateValid && isCardVerifiacationCodeValid
+    }
+    
+    func onStateChange(state: EngineState) {
+        if state == EngineState.SUCCESS {
+            isLoading = false
+            onSuccess()
+        }
+        if state == EngineState.ERROR {
+            isLoading = false
+            onError()
+        }
     }
 }
 

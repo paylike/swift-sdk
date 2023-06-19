@@ -31,8 +31,8 @@ public struct SimpleWhitelabelPaymentForm: View {
                 SecurePaymentLabel(color: Color.PaylikeGreen)
             }.padding()
             
-            LoadingOverlay().opacity(viewModel.isLoading ? 1.0 : 0.0)
-                //.animation(.easeOut(duration: 0.5).delay(1), value: opacity)
+            LoadingOverlay()
+                .opacity(viewModel.isLoading ? 1.0 : 0.0)
             
             if viewModel.shouldRenderWebView {
                 viewModel.engine.webViewModel!.paylikeWebView

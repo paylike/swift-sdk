@@ -11,15 +11,23 @@ import PaylikeEngine
 import PaylikeClient
 
 struct ExampleWrapper: View {
+    let engine: PaylikeEngine
+    var viewModel: SimpleWhitelabelPaymentFormViewModel
+    
+    init(example: Example) {
+        self.example = example
+        self.engine = PaylikeEngine(merchantID: "YOUR_CODE", engineMode: .TEST, loggingMode: .DEBUG)
+        self.viewModel = SimpleWhitelabelPaymentFormViewModel(engine: engine, amount: PaymentAmount(currency: CurrencyCodes.EUR, value: 100, exponent: 2), onError: { print("on error test") })
+    }
+    
     let example: Example
     // TODO Refine Paylike interface
-    let viewModel = SimpleWhitelabelPaymentFormViewModel(engine: PaylikeEngine(merchantID: "e393f9ec-b2f7-4f81-b455-ce45b02d355d", engineMode: .TEST, loggingMode: .DEBUG), amount: PaymentAmount(currency: CurrencyCodes.EUR, value: 100, exponent: 2))
-       var body: some View {
-           VStack {
-               Text(example.title)
-               SimpleWhitelabelPaymentForm(viewModel: viewModel)
-           }
-       }
+    var body: some View {
+        VStack {
+            Text(example.title)
+            SimpleWhitelabelPaymentForm(viewModel: viewModel)
+        }
+    }
 }
 
 struct ExampleWrapperView_Previews: PreviewProvider {
