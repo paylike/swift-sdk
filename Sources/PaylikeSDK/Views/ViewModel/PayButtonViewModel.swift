@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 import PaylikeClient
 
-public let defaultButtonStyle = PayButtonStyle()
 
 public class PayButtonViewModel: ObservableObject {
     @Published var amount: PaymentAmount

@@ -8,6 +8,8 @@
 import SwiftUI
 import PaylikeClient
 
+public let defaultButtonStyle = PayButtonStyle()
+
 public struct PayButtonStyle: ButtonStyle {
     struct StyledButton: View {
             let configuration: ButtonStyle.Configuration
@@ -33,10 +35,10 @@ public struct PayButtonStyle: ButtonStyle {
 }
 
 struct PayButton: View {
-    public init(_ viewModel: PayButtonViewModel) {
-        self.viewModel = viewModel
-    }
-    @ObservedObject var viewModel: PayButtonViewModel
+    var displayAmount: String
+    var submit: () async -> Void
+    var disabled: Bool
+    var styling: PayButtonStyle = defaultButtonStyle
     
     var body: some View {
         Button(action: {
@@ -45,18 +47,18 @@ struct PayButton: View {
                 .processInfo
                 .environment["XCODE_RUNNING_FOR_PREVIEWS"] != "1" {
                 Task {
-                     await viewModel.submit()
+                     await submit()
                 }
             }
         }) {
             HStack {
                 Text("Pay")
                 Spacer()
-                Text(viewModel.displayAmount)
+                Text(displayAmount)
             }
         }
-            .buttonStyle(viewModel.styling)
-            .disabled(viewModel.disabled)
+            .buttonStyle(styling)
+            .disabled(disabled)
     }
 }
 
@@ -64,12 +66,8 @@ struct PayButton_Previews: PreviewProvider {
     
     static var previews: some View {
         VStack {
-            PayButton(
-                PayButtonViewModel(amount: PaymentAmount(currency: CurrencyCodes.EUR, value: 3000, exponent: 2))
-            )
-            PayButton(
-                PayButtonViewModel(amount: PaymentAmount(currency: CurrencyCodes.EUR, value: 3000, exponent: 2), disabled: true)
-            )
+            PayButton(displayAmount: "90.00 EUR", submit: {}, disabled: false)
+            PayButton(displayAmount: "60.00 EUR", submit: {}, disabled: true)
         }
     }
 }
