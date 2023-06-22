@@ -24,5 +24,6 @@ struct ExpiryDateField_Previews: PreviewProvider {
         VStack {
             ExpiryDateField(expiryDate: .constant("0123"), isValid: true)
         }
+        .environmentObject(PaylikeTheme)
     }
 }

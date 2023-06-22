@@ -23,5 +23,6 @@ struct CardValidationCodeField: View {
 struct CardValidationCodeField_Previews: PreviewProvider {
     static var previews: some View {
         CardValidationCodeField(cvc: .constant("321"), isValid: true)
+            .environmentObject(PaylikeTheme)
     }
 }

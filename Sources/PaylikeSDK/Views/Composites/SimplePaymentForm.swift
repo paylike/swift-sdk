@@ -39,6 +39,7 @@ public struct SimplePaymentForm: View {
                     .frame(maxWidth: .infinity, maxHeight: 400, alignment: .center)
             }
         }
+        .environmentObject(PaylikeTheme)
     }
 }
 

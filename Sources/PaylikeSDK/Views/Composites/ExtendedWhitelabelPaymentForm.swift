@@ -30,10 +30,12 @@ struct ExtendedWhitelabelPaymentForm: View {
             SecurePaymentLabel()
         }.padding()
     }
+    // TODO: set theming as whiteLabel
 }
 
 struct ExtendedWhitelabelPaymentForm_Previews: PreviewProvider {
     static var previews: some View {
         ExtendedWhitelabelPaymentForm()
+            .environmentObject(PaylikeTheme) // Temporary Paylike theming
     }
 }

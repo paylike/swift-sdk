@@ -12,6 +12,7 @@ struct CardNumberFieldViewModel {
 }
 
 struct CardNumberField: View {
+    @EnvironmentObject var theme: Theme
     @Binding public var cardNumber: String
     public var isValid: Bool
     
@@ -20,23 +21,32 @@ struct CardNumberField: View {
     
     var body: some View {
         let formattedField = FormattedTextField(placeholder: placeholder, value: $cardNumber, formatter: CardNumberFormatter())
-        GeometryReader { metrics in
-            HStack(alignment: .center) {
-                StyledTextField(label, textField: formattedField, isValid: isValid)
-                CardProviderIcon(cardNumber: cardNumber)
-                    .frame(height: metrics.size.height * 0.2)
+            HStack {
+                    HStack(alignment: .center) {
+                        StyledTextField(label, textField: formattedField, isValid: isValid)
+                        CardProviderIcon(cardNumber: cardNumber, height: theme.providerIconHeight)
+                    }
             }
-        }
     }
 }
 
 struct CardNumberField_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            CardNumberField(cardNumber: .constant("5105105105105105"), isValid: true) // mastercard
-            CardNumberField(cardNumber: .constant("5777777777777777"), isValid: true) // maestro
-            CardNumberField(cardNumber: .constant("4111232234334311"), isValid: true) // visa
-            CardNumberField(cardNumber: .constant("1234567890123456"), isValid: false) // invalid card number
+            VStack {
+                CardNumberField(cardNumber: .constant("5105105105105105"), isValid: true)// mastercard
+                CardNumberField(cardNumber: .constant("5777777777777777"), isValid: true) // maestro
+                CardNumberField(cardNumber: .constant("4111232234334311"), isValid: true) // visa
+                CardNumberField(cardNumber: .constant("1234567890123456"), isValid: false) // invalid card number
+            }
+            .environmentObject(PaylikeTheme)
+            VStack {
+                CardNumberField(cardNumber: .constant("5105105105105105"), isValid: true)// mastercard
+                CardNumberField(cardNumber: .constant("5777777777777777"), isValid: true) // maestro
+                CardNumberField(cardNumber: .constant("4111232234334311"), isValid: true) // visa
+                CardNumberField(cardNumber: .constant("1234567890123456"), isValid: false) // invalid card number
+            }
+            .environmentObject(TestCustomTheme)
         }
     }
 }

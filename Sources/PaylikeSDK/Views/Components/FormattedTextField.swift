@@ -45,5 +45,6 @@ struct FormattedTextField_Previews: PreviewProvider {
             FormattedTextfieldPreviewWrapper("placeholder", label: "label", formatter: CardNumberFormatter())
             Text("Value: \(value)")
         }
+        .environmentObject(PaylikeTheme)
     }
 }
