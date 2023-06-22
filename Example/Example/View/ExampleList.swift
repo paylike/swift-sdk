@@ -2,6 +2,8 @@
 import SwiftUI
 
 struct ExampleList: View {
+    var examples: [Example]
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -19,6 +21,6 @@ struct ExampleList: View {
 
 struct ExampleListView_Previews: PreviewProvider {
     static var previews: some View {
-        ExampleList()
+        ExampleList(examples: getExampleList(engine: getEngine()))
     }
 }

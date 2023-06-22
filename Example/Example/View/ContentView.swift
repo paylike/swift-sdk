@@ -1,6 +1,5 @@
 //
 //  ContentView.swift
-//  Example2
 //
 //  Created by Székely Károly on 2023. 04. 26..
 //
@@ -9,7 +8,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        ExampleList()
+        ExampleList(examples: getExampleList(engine: getEngine()))
     }
 }
 

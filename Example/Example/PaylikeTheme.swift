@@ -1,6 +1,5 @@
 //
 //  PaylikeTheme.swift
-//  Example2
 //
 //  Created by Székely Károly on 2023. 04. 26..
 //
