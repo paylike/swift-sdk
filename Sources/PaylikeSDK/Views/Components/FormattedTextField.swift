@@ -15,6 +15,14 @@ public func FormattedTextField<Formatter: TextFieldFormatter> (placeholder: Stri
     }))
 }
 
+public func FormattedSecureField<Formatter: TextFieldFormatter> (placeholder: String, value: Binding<Formatter.Value>, formatter: Formatter) -> SecureField<Text> {
+    return SecureField(placeholder, text: Binding(get: {
+        return formatter.displayString(for: value.wrappedValue)
+    }, set: { string in
+        value.wrappedValue = formatter.value(from: string)
+    }))
+}
+
 private struct FormattedTextfieldPreviewWrapper<Formatter: TextFieldFormatter>: View {
     @State public var value: Formatter.Value
     

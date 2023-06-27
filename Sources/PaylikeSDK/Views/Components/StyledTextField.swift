@@ -29,12 +29,34 @@ public struct StyledTextField<Label>: View where Label : View {
     }
 }
 
+public struct StyledSecureField<Label>: View where Label: View {
+    public init (_ label: String, secureField: SecureField<Label>, isValid: Bool = true) {
+        self.label = label
+        self.secureField = secureField
+        self.isValid = isValid
+    }
+    let label: String
+    let secureField: SecureField<Label>
+    // TODO only show validation error, if the field was already touched
+    let isValid: Bool
+    
+    public var body: some View {
+        VStack(alignment: .leading) {
+            Text(label.uppercased())
+                .bold()
+            secureField.font(.title)
+                .foregroundColor(isValid ? Color.PaylikeGreen : Color.PaylikeError)
+        }
+    }
+}
+
 struct StyledTextField_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             StyledTextField("Label", textField: TextField("placeholder", text: .constant("")), isValid: true)
             StyledTextField("Label", textField: TextField("placeholder", text: .constant("lull")), isValid: true)
             StyledTextField("Label", textField: TextField("placeholder", text: .constant("invalid")), isValid: false)
+            StyledSecureField("Secure", secureField: SecureField("placeholder", text: .constant("123")), isValid: true)
         }
     }
 }
