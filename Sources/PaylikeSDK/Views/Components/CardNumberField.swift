@@ -15,18 +15,19 @@ struct CardNumberField: View {
     @EnvironmentObject var theme: Theme
     @Binding public var cardNumber: String
     public var isValid: Bool
+    @State public var isEditing: Bool = false
     
     let placeholder = "0000 0000 0000 0000"
     let label = "Card number"
     
     var body: some View {
-        let formattedField = FormattedTextField(placeholder: placeholder, value: $cardNumber, formatter: CardNumberFormatter())
-            HStack {
-                    HStack(alignment: .center) {
-                        StyledTextField(label, textField: formattedField, isValid: isValid)
-                        CardProviderIcon(cardNumber: cardNumber, height: theme.providerIconHeight)
-                    }
-            }
+        let formattedField = FormattedTextField(placeholder: placeholder, value: $cardNumber, formatter: CardNumberFormatter(), onEditingChanged: { isEditing in
+            self.isEditing = isEditing
+        })
+        HStack(alignment: .center) {
+            StyledTextField(label, textField: formattedField, isValid: isValid || isEditing)
+            CardProviderIcon(cardNumber: cardNumber, height: theme.providerIconHeight)
+        }
     }
 }
 

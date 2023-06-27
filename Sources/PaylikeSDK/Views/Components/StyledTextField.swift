@@ -10,10 +10,8 @@ import SwiftUI
 
 public struct StyledTextField<Label>: View where Label : View {
     @EnvironmentObject var theme: Theme
-
     let label: String
     let textField: TextField<Label>
-    // TODO only show validation error, if the field was already touched
     let isValid: Bool
     
     public init (_ label: String, textField: TextField<Label>, isValid: Bool = true) {
@@ -28,6 +26,7 @@ public struct StyledTextField<Label>: View where Label : View {
                 .bold()
             textField.font(.title)
                 .foregroundColor(isValid ? theme.primaryColor : theme.errorColor)
+                .keyboardType(.numberPad)
         }
     }
 }
