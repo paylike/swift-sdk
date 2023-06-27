@@ -25,7 +25,9 @@ public struct StyledTextField<Label>: View where Label : View {
                 .bold()
             textField.font(.title)
                 .foregroundColor(isValid ? theme.primaryColor : theme.errorColor)
+                #if os(iOS)
                 .keyboardType(.numberPad)
+                #endif
         }
     }
 }

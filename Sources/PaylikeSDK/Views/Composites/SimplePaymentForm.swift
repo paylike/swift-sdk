@@ -31,7 +31,9 @@ public struct SimplePaymentForm: View {
                     displayAmount: viewModel.payButtonDisplayAmount,
                     submit:
                         {
+                            #if os(iOS)
                             hideKeyboard()
+                            #endif
                             await viewModel.submit()
                         },
                     disabled: viewModel.payButtonDisabled
@@ -52,11 +54,13 @@ public struct SimplePaymentForm: View {
     }
 }
 
+#if os(iOS)
 extension View {
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
+#endif
 
 struct SimplePaymentForm_Previews: PreviewProvider {
     static var previews: some View {
