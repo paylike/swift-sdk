@@ -44,6 +44,6 @@ public struct SimplePaymentForm: View {
 
 struct SimplePaymentForm_Previews: PreviewProvider {
     static var previews: some View {
-        SimplePaymentForm(viewModel:  SimplePaymentFormViewModel(engine: PaylikeEngine(merchantID: "e393f9ec-b2f7-4f81-b455-ce45b02d355d", engineMode: .TEST, loggingMode: .DEBUG), amount: PaymentAmount(currency: CurrencyCodes.BHD, value: 300000, exponent: 2)))
+        SimplePaymentForm(viewModel:  SimplePaymentFormViewModel(engine: PaylikeEngine(merchantID: "YOUR KEY", engineMode: .TEST, loggingMode: .DEBUG), amount: PaymentAmount(currency: CurrencyCodes.BHD, value: 300000, exponent: 2)))
     }
 }

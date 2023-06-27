@@ -10,8 +10,10 @@ import Foundation
 import PaylikeEngine
 import PaylikeClient
 
+public typealias PaylikeError = EngineErrorObject
+
 public typealias OnSuccessHandler = () -> Void
-public typealias OnErrorHandler = () -> Void // TODO call with error
+public typealias OnErrorHandler = (_ error: PaylikeError) -> Void
 
 public protocol PaylikeViewModel: ObservableObject {
     init(engine: PaylikeEngine, onSuccess: OnSuccessHandler?, onError: OnErrorHandler?)

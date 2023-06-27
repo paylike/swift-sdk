@@ -13,11 +13,22 @@ import Combine
 
 
 public class SimplePaymentFormViewModel: PaylikeViewModel {
-
-    public required init(engine: PaylikeEngine, onSuccess: OnSuccessHandler?, onError: OnErrorHandler?) {
+    
+    public required init(engine: PaylikeEngine, onSuccess: OnSuccessHandler? = {}, onError: OnErrorHandler? = { error in }) {
         self.engine = engine
         self.onSuccess = onSuccess
         self.onError = onError
+        
+        setEngineStateListeners()
+    }
+    
+    public init(engine: PaylikeEngine, amount: PaymentAmount, onSuccess: OnSuccessHandler? = {}, onError: OnErrorHandler? = { error in }) {
+        self.engine = engine
+        self.amount = amount
+        self.onError = onError
+        self.onSuccess = onSuccess
+        
+        setEngineStateListeners()
     }
     
     public func addPaymentAmount(_ amount: PaymentAmount) {
@@ -44,7 +55,8 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
     }
     
     public func addAdditionalPaymentData(textData: String?, customData: AnyEncodable?) {
-        // TODO
+        self.paymentTextData = textData
+        self.paymentCustomData = customData
     }
     
     @Published var engine: PaylikeEngine
@@ -56,6 +68,8 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
     var paymentTestData: PaymentTest?
     var paymentPlanDataList: [PaymentPlan]?
     var paymentUnplannedData: PaymentUnplanned?
+    var paymentTextData: String?
+    var paymentCustomData: AnyEncodable?
     
     private var cancellables: Set<AnyCancellable> = []
     
@@ -67,7 +81,12 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
     @Published var shouldRenderWebView: Bool = false
     
     @Published var _engineState: EngineState?
-    @Published var _errorMessage: String? = nil
+    @Published var _engineError: EngineErrorObject?
+    
+    
+    var _errorMessage: String? {
+        _engineError?.message
+    }
     
     var payButtonDisabled: Bool {
         return !isFormValid() || isLoading
@@ -114,16 +133,6 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
         return isCardNumberValid && isExpiryDateValid && isCardVerifiacationCodeValid
     }
     
-    public init(engine: PaylikeEngine, amount: PaymentAmount = PaymentAmount(currency: CurrencyCodes.USD, value: 0, exponent: 0), onError: @escaping OnErrorHandler = {}, onSuccess: @escaping OnSuccessHandler = {}) {
-        self.engine = engine
-        self.amount = amount
-        
-        self.onError = onError
-        self.onSuccess = onSuccess
-        
-        setEngineStateListeners()
-    }
-    
     func setEngineStateListeners() {
         self.cancellables.insert(
             self.engine.state.projectedValue
@@ -141,7 +150,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
                 .sink(receiveValue: { error in
                     Task {
                         await MainActor.run {
-                            self._errorMessage = error?.message
+                            self._engineError = error
                         }
                     }
                 })
@@ -158,14 +167,19 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
         )
     }
     
+    func setEnginePaymentData() async -> Void {
+        await engine.addEssentialPaymentData(cardNumber: self.cardNumber, cvc: self.cvc, expiry: self.cardExpiry!)
+        engine.addDescriptionPaymentData(paymentAmount: self.amount, paymentPlanDataList: self.paymentPlanDataList, paymentUnplannedData: self.paymentUnplannedData, paymentTestData: self.paymentTestData)
+        engine.addAdditionalPaymentData(textData: paymentTextData, customData: paymentCustomData)
+    }
     
     func submit() async -> Void {
         if (self.isFormValid()) {
             await MainActor.run {
                 isLoading = true
             }
-            await engine.addEssentialPaymentData(cardNumber: self.cardNumber, cvc: self.cvc, expiry: self.cardExpiry!)
-            engine.addDescriptionPaymentData(paymentAmount: self.amount, paymentPlanDataList: self.paymentPlanDataList, paymentUnplannedData: self.paymentUnplannedData, paymentTestData: self.paymentTestData)
+            await setEnginePaymentData()
+
             await self.engine.startPayment()
         }
     }
@@ -180,7 +194,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
         if state == EngineState.ERROR {
             isLoading = false
             if onError != nil {
-                onError!()
+                onError!(_engineError!)
             }
         }
     }
