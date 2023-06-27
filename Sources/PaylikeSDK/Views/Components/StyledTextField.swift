@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 public struct StyledTextField<Label>: View where Label : View {
     @EnvironmentObject var theme: Theme
     let label: String
