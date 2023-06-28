@@ -40,7 +40,6 @@ public struct SimplePaymentForm: View {
                 )
                 SecurePaymentLabel()
             }
-            .padding()
             
             LoadingOverlay()
                 .opacity(viewModel.isLoading ? 1.0 : 0.0)
@@ -50,7 +49,6 @@ public struct SimplePaymentForm: View {
                     .frame(maxWidth: .infinity, maxHeight: 400, alignment: .center)
             }
         }
-        .environmentObject(PaylikeTheme)
     }
 }
 
@@ -65,5 +63,6 @@ extension View {
 struct SimplePaymentForm_Previews: PreviewProvider {
     static var previews: some View {
         SimplePaymentForm(viewModel:  SimplePaymentFormViewModel(engine: PaylikeEngine(merchantID: "YOUR KEY", engineMode: .TEST, loggingMode: .DEBUG), amount: PaymentAmount(currency: CurrencyCodes.BHD, value: 300000, exponent: 2)))
+            .environmentObject(PaylikeTheme)
     }
 }

@@ -20,7 +20,7 @@ class SimpleExampleClosures: ObservableObject {
     }
 }
 
-struct SimplePaylikeExampleView: View {
+struct SimplePaylikeExample: View {
     var viewModel: SimplePaymentFormViewModel
     
     @ObservedObject var closures: SimpleExampleClosures
@@ -44,5 +44,12 @@ struct SimplePaylikeExampleView: View {
                 Text("Example over, succesful transaction!").font(.headline).foregroundColor(.PaylikeGreen)
             }.opacity(closures.showSuccessMessage ? 1.0 : 0.0)
         }
+    }
+}
+
+struct SimplePaylikeExample_Previews: PreviewProvider {
+    static var previews: some View {
+        SimplePaylikeExample(engine: getEngine())
+            .environmentObject(PaylikeTheme)
     }
 }

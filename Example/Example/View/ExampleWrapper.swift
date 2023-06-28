@@ -15,9 +15,10 @@ struct ExampleWrapper: View {
     var body: some View {
         VStack {
             Text(example.title)
-            
+            Spacer()
             example.exampleView
-        }
+            Spacer()
+        }.padding()
     }
 }
 
