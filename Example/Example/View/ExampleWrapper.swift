@@ -12,12 +12,12 @@ import PaylikeClient
 
 struct ExampleWrapper: View {
     let engine: PaylikeEngine
-    var viewModel: SimpleWhitelabelPaymentFormViewModel
+    var viewModel: SimplePaymentFormViewModel
     
     init(example: Example) {
         self.example = example
         self.engine = PaylikeEngine(merchantID: "YOUR_CODE", engineMode: .TEST, loggingMode: .DEBUG)
-        self.viewModel = SimpleWhitelabelPaymentFormViewModel(engine: engine, amount: PaymentAmount(currency: CurrencyCodes.EUR, value: 100, exponent: 2), onError: { print("on error test") })
+        self.viewModel = SimplePaymentFormViewModel(engine: engine, amount: PaymentAmount(currency: CurrencyCodes.EUR, value: 100, exponent: 2), onError: { print("on error test") })
     }
     
     let example: Example
@@ -25,7 +25,7 @@ struct ExampleWrapper: View {
     var body: some View {
         VStack {
             Text(example.title)
-            SimpleWhitelabelPaymentForm(viewModel: viewModel)
+            SimplePaymentForm(viewModel: viewModel)
         }
     }
 }

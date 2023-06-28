@@ -22,8 +22,8 @@ struct AdditionalTextField_Previews: PreviewProvider {
         Group {
             AdditionalTextField(label: "Empty", placeholder: "be free here", value: .constant(""))
             AdditionalTextField(label: "Texts", placeholder: "be free here", value: .constant("written text"))
-            
         }
         .previewLayout(.fixed(width: 300, height: 70))
+        .environmentObject(PaylikeTheme)
     }
 }

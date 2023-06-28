@@ -9,14 +9,15 @@ import Foundation
 import SwiftUI
 
 struct CardProviderIcon: View {
-    
     public let cardNumber: String
+    public let height: CGFloat
     
     var body: some View {
         if let cardType = calculateCardProviderFromNumber(number: cardNumber)?.rawValue {
             Image(cardType, bundle: .module)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
+                .frame(height: height)
         } else {
             EmptyView()
         }
@@ -44,16 +45,32 @@ fileprivate func calculateCardProviderFromNumber(number: String) -> SupportedCar
     return result
 }
 
+struct CardProviderIconPreviewWrapperView: View {
+    @State var height: CGFloat = 20
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            CardProviderIcon(cardNumber: "5105105105105105", height: height) // mastercard
+            Divider()
+            CardProviderIcon(cardNumber: "4111232234334311", height: height) // visa
+            Divider()
+            CardProviderIcon(cardNumber: "1234567890123456", height: height) // invalid
+            Text("EmptyView in case of invalid card number")
+            Divider()
+            CardProviderIcon(cardNumber: "5777777777777777", height: height) // maestro
+            Spacer()
+            VStack {
+                Text("Icon height: \(height, specifier: "%.2f")")
+                Slider(value: $height, in: .init(uncheckedBounds: (lower: 0, upper: 200)))
+            }
+            .frame(width: 300)
+        }
+    }
+}
+
 struct CardProviderIcon_Previews: PreviewProvider {
     static var previews: some View {
-        VStack(alignment: .center) {
-            CardProviderIcon(cardNumber: "5105105105105105") // mastercard
-            Divider()
-            CardProviderIcon(cardNumber: "4111232234334311") // visa
-            Divider()
-            CardProviderIcon(cardNumber: "1234567890123456") // invalid
-            Divider()
-            CardProviderIcon(cardNumber: "5777777777777777") // maestro
-        }
+        CardProviderIconPreviewWrapperView()
+            .environmentObject(PaylikeTheme)
     }
 }

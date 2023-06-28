@@ -17,8 +17,6 @@ struct ExtendedWhitelabelPaymentForm: View {
     
     @State private var cvc: String = "";
     
-    private var payButtonViewModel = PayButtonViewModel(amount: PaymentAmount(currency: CurrencyCodes.EUR, value: 200, exponent: 0))
-
     var body: some View {
         VStack {
             AdditionalTextField(label: "e-mail", placeholder: "john@doe.com", value: $email)
@@ -28,14 +26,16 @@ struct ExtendedWhitelabelPaymentForm: View {
                 ExpiryDateField(expiryDate: $expiryDate, isValid: true)
                 CardValidationCodeField(cvc: $cvc, isValid: true)
             }
-            PayButton(payButtonViewModel)
+            PayButton(displayAmount: "200 EUR", submit: {}, disabled: false)
             SecurePaymentLabel()
         }.padding()
     }
+    // TODO: set theming as whiteLabel
 }
 
 struct ExtendedWhitelabelPaymentForm_Previews: PreviewProvider {
     static var previews: some View {
         ExtendedWhitelabelPaymentForm()
+            .environmentObject(PaylikeTheme) // Temporary Paylike theming
     }
 }

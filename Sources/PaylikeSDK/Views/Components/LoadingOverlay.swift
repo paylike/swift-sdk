@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct LoadingOverlay: View {
-    var color = Color.white
+    @EnvironmentObject var theme: Theme
+    
     var lineWidth = 2.0
     
-    let backgroundGradient: LinearGradient = LinearGradient(gradient: Gradient(colors: [Color.PaylikeGreen, Color.PaylikeDarkGreen]), startPoint: .top, endPoint: .bottom)
-    
+    var backgroundGradient: LinearGradient {
+        LinearGradient(gradient: Gradient(colors: [theme.primaryColor, theme.secondaryColor]), startPoint: .top, endPoint: .bottom)
+    }
     var playSuccessAnimation: Bool = false
     var animationProgress: Double {
         return playSuccessAnimation ? 1 : 0.0
@@ -24,7 +26,7 @@ struct LoadingOverlay: View {
                 Rectangle()
                     .fill(backgroundGradient)
                     .cornerRadius(15)
-                SuccessAnimation(color: color, lineWidth: lineWidth, animationProgress: animationProgress)
+                SuccessAnimation(color: theme.foregroundColor, lineWidth: lineWidth, animationProgress: animationProgress)
                     .aspectRatio(1, contentMode: ContentMode.fit)
             }
         }
@@ -45,5 +47,6 @@ private struct LandingOverlayPreviewWrapperView: View {
 struct LoadingOverlay_Previews: PreviewProvider {
     static var previews: some View {
         LandingOverlayPreviewWrapperView()
+            .environmentObject(PaylikeTheme)
     }
 }
