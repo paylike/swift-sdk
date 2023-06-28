@@ -34,6 +34,6 @@ struct ExampleListRow: View {
 
 struct ExampleListRowView_Previews: PreviewProvider {
     static var previews: some View {
-        ExampleListRow(example: examples[1])
+        ExampleListRow(example: Example(id: "2", title: "Example 2", details: "So much to lose", view: AnyView(EmptyExampleView())))
     }
 }

@@ -1,6 +1,5 @@
 //
 //  ExampleApp.swift
-//  Example
 //
 //  Created by Laszlo Kocsis on 2023. 04. 20..
 //
