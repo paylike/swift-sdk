@@ -27,9 +27,20 @@ public struct SimplePaymentForm: View {
                     ExpiryDateField(expiryDate: $viewModel.expiryDate, isValid: viewModel.isExpiryDateValid)
                     CardValidationCodeField(cvc: $viewModel.cvc, isValid: viewModel.isCardVerifiacationCodeValid)
                 }
-                PayButton(displayAmount: viewModel.payButtonDisplayAmount, submit: viewModel.submit, disabled: viewModel.payButtonDisabled)
+                PayButton(
+                    displayAmount: viewModel.payButtonDisplayAmount,
+                    submit:
+                        {
+                            #if os(iOS)
+                            hideKeyboard()
+                            #endif
+                            await viewModel.submit()
+                        },
+                    disabled: viewModel.payButtonDisabled
+                )
                 SecurePaymentLabel()
-            }.padding()
+            }
+            .padding()
             
             LoadingOverlay()
                 .opacity(viewModel.isLoading ? 1.0 : 0.0)
@@ -39,8 +50,17 @@ public struct SimplePaymentForm: View {
                     .frame(maxWidth: .infinity, maxHeight: 400, alignment: .center)
             }
         }
+        .environmentObject(PaylikeTheme)
     }
 }
+
+#if os(iOS)
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+#endif
 
 struct SimplePaymentForm_Previews: PreviewProvider {
     static var previews: some View {
