@@ -8,22 +8,39 @@
 import SwiftUI
 
 struct ErrorLog: View {
+    @EnvironmentObject var theme: Theme
+
     var message: String = "Unknown Error"
     
     var body: some View {
         HStack {
             Text(message)
-                .foregroundColor(.white)
+                .foregroundColor(theme.foregroundColor)
                 .padding()
         }
         .frame(maxWidth: .infinity)
-        .background(Color.PaylikeError)
+        .background(theme.errorColor)
         .cornerRadius(5)
     }
 }
 
 struct ErrorLog_Previews: PreviewProvider {
     static var previews: some View {
-        ErrorLog()
+        VStack {
+            VStack {
+                ErrorLog()
+                    .environmentObject(PaylikeTheme)
+                ErrorLog()
+                    .environmentObject(TestCustomTheme)
+            }
+            .environment(\.colorScheme, .light)
+            VStack {
+                ErrorLog()
+                    .environmentObject(PaylikeTheme)
+                ErrorLog()
+                    .environmentObject(TestCustomTheme)
+            }
+            .environment(\.colorScheme, .dark)
+        }
     }
 }

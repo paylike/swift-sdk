@@ -24,4 +24,3 @@ struct ExpiryDateFormatter: TextFieldFormatter {
         return String(string.onlyNumbers().prefix(4))
     }
 }
-

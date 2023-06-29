@@ -8,20 +8,25 @@
 import Foundation
 import SwiftUI
 
-extension Color {
-    static var PaylikeGreen: Color {
-        return Color("Paylike Green", bundle: .module)
-    }
+public final class Theme : ObservableObject {
     
-    static var PaylikeLightGreen: Color {
-        return Color("Paylike Light Green", bundle: .module)
-    }
+    public var providerIconHeight: CGFloat = 20
+    public var paylikeIconHeight: CGFloat = 30
     
-    static var PaylikeDarkGreen: Color {
-        return Color("Paylike Dark Green", bundle: .module)
-    }
-    
-    static var PaylikeError: Color {
-        return Color(red: 0.8, green: 0.2, blue: 0.2)
-    }
+    public var primaryColor: Color = Color("Paylike Primary Green", bundle: .module)
+    public var secondaryColor: Color = Color("Paylike Secondary Green", bundle: .module)
+    public var foregroundColor: Color = Color("Foreground", bundle: .module)
+    public var backgroundColor: Color = Color("Background", bundle: .module)
+    public var errorColor: Color = Color("Error", bundle: .module)
+    public var disabledColor: Color = Color("Disabled", bundle: .module)
+}
+
+public let PaylikeTheme = Theme()
+
+var TestCustomTheme: Theme {
+    let theme = Theme()
+    theme.primaryColor = .blue
+    theme.errorColor = .orange
+    theme.disabledColor = Color(red: 1, green: 0.2, blue: 0.2)
+    return theme
 }

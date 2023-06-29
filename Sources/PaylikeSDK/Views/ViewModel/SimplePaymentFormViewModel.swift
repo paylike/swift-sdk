@@ -14,19 +14,21 @@ import Combine
 
 public class SimplePaymentFormViewModel: PaylikeViewModel {
     
-    public required init(engine: PaylikeEngine, onSuccess: OnSuccessHandler? = {}, onError: OnErrorHandler? = { error in }) {
+    public required init(engine: PaylikeEngine, onSuccess: OnSuccessHandler? = {}, onError: OnErrorHandler? = { error in }, beforePayment: BeforePayment? = nil) {
         self.engine = engine
         self.onSuccess = onSuccess
         self.onError = onError
+        self.beforePayment = beforePayment
         
         setEngineStateListeners()
     }
     
-    public init(engine: PaylikeEngine, amount: PaymentAmount, onSuccess: OnSuccessHandler? = {}, onError: OnErrorHandler? = { error in }) {
+    public init(engine: PaylikeEngine, amount: PaymentAmount, onSuccess: OnSuccessHandler? = {}, onError: OnErrorHandler? = { error in }, beforePayment: BeforePayment? = nil) {
         self.engine = engine
         self.amount = amount
         self.onError = onError
         self.onSuccess = onSuccess
+        self.beforePayment = beforePayment
         
         setEngineStateListeners()
     }
@@ -63,6 +65,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
     
     private var onSuccess: OnSuccessHandler?
     private var onError: OnErrorHandler?
+    private var beforePayment: BeforePayment?
     
     @Published var amount: PaymentAmount?
     var paymentTestData: PaymentTest?
@@ -180,6 +183,10 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
             }
             await setEnginePaymentData()
 
+            if beforePayment != nil {
+                beforePayment!(engine, cardNumber, cvc, cardExpiry!, paymentTextData, paymentCustomData)
+            }
+
             await self.engine.startPayment()
         }
     }
@@ -193,7 +200,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
         }
         if state == EngineState.ERROR {
             isLoading = false
-            if onError != nil {
+            if onError != nil && _engineError != nil {
                 onError!(_engineError!)
             }
         }

@@ -7,5 +7,5 @@ import Foundation
 import PaylikeEngine
 
 func getEngine() -> PaylikeEngine {
-    return PaylikeEngine(merchantID: merchantId, engineMode: .TEST, loggingMode: .DEBUG)
+    return PaylikeEngine(merchantID: merchantId, engineMode: .TEST, loggingMode: .RELEASE)
 }

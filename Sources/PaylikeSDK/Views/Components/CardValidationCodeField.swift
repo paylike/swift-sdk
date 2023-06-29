@@ -15,14 +15,21 @@ struct CardValidationCodeField: View {
     let label = "CVC"
     
     var body: some View {
-        let formattedField = FormattedSecureField(placeholder: placeholder, value: $cvc, formatter: CardValidationCodeFormatter())
+        let formattedField = FormattedSecureField(placeholder: placeholder, value: $cvc, formatter: CardValidationCodeFormatter()
+        )
         StyledSecureField(label, secureField: formattedField, isValid: isValid)
+
     }
 }
 
 struct CardValidationCodeField_Previews: PreviewProvider {
     static var previews: some View {
-        CardValidationCodeField(cvc: .constant("321"), isValid: true)
-        CardValidationCodeField(cvc: .constant("1"), isValid: true)
+        VStack {
+            CardValidationCodeField(cvc: .constant("321"), isValid: true)
+            CardValidationCodeField(cvc: .constant("31"), isValid: true)
+            CardValidationCodeField(cvc: .constant("1"), isValid: true)
+            CardValidationCodeField(cvc: .constant(""), isValid: true)
+        }
+        .environmentObject(PaylikeTheme)
     }
 }
