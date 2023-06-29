@@ -24,6 +24,6 @@ struct ExampleWrapper: View {
 
 struct ExampleWrapperView_Previews: PreviewProvider {
     static var previews: some View {
-        ExampleWrapper(example: Example(id: "2", title: "Example 2", details: "So much to lose", view: AnyView(EmptyExampleView())))
+        ExampleWrapper(example: Example(id: "1", title: "Example", details: "Previewing empty example", view: AnyView(EmptyExampleView())))
     }
 }

@@ -13,54 +13,6 @@ import Combine
 
 
 public class SimplePaymentFormViewModel: PaylikeViewModel {
-    
-    public required init(engine: PaylikeEngine, onSuccess: OnSuccessHandler? = {}, onError: OnErrorHandler? = { error in }, beforePayment: BeforePayment? = nil) {
-        self.engine = engine
-        self.onSuccess = onSuccess
-        self.onError = onError
-        self.beforePayment = beforePayment
-        
-        setEngineStateListeners()
-    }
-    
-    public init(engine: PaylikeEngine, amount: PaymentAmount, onSuccess: OnSuccessHandler? = {}, onError: OnErrorHandler? = { error in }, beforePayment: BeforePayment? = nil) {
-        self.engine = engine
-        self.amount = amount
-        self.onError = onError
-        self.onSuccess = onSuccess
-        self.beforePayment = beforePayment
-        
-        setEngineStateListeners()
-    }
-    
-    public func addPaymentAmount(_ amount: PaymentAmount) {
-        self.amount = amount
-    }
-    
-    public func addPaymentPlanDataList(_ paymentPlanDataList: [PaymentPlan]) {
-        self.paymentPlanDataList = paymentPlanDataList
-    }
-    
-    public func addPaymentUnplannedData(_ paymentUnplannedData: PaymentUnplanned) {
-        self.paymentUnplannedData = paymentUnplannedData
-    }
-    
-    public func addPaymentTestData(_ paymentTestData: PaymentTest) {
-        self.paymentTestData = paymentTestData
-    }
-    
-    public func addDescriptionPaymentData(paymentAmount: PaymentAmount?, paymentPlanDataList: [PaymentPlan]?, paymentUnplannedData: PaymentUnplanned?, paymentTestData: PaymentTest?) {
-        self.amount = amount
-        self.paymentPlanDataList = paymentPlanDataList
-        self.paymentUnplannedData = paymentUnplannedData
-        self.paymentTestData = paymentTestData
-    }
-    
-    public func addAdditionalPaymentData(textData: String?, customData: AnyEncodable?) {
-        self.paymentTextData = textData
-        self.paymentCustomData = customData
-    }
-    
     @Published var engine: PaylikeEngine
     
     private var onSuccess: OnSuccessHandler?
@@ -81,11 +33,10 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
     @Published var cvc: String = "";
     
     @Published var isLoading: Bool = false
-    @Published var shouldRenderWebView: Bool = false
     
     @Published var _engineState: EngineState?
     @Published var _engineError: EngineErrorObject?
-    
+    @Published var _shouldRenderWebView: Bool = false
     
     var _errorMessage: String? {
         _engineError?.message
@@ -131,6 +82,53 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
     var isCardVerifiacationCodeValid: Bool {
         return validateCardVerificationCode(cvc: cvc)
     }
+
+    public required init(engine: PaylikeEngine, onSuccess: OnSuccessHandler? = nil, onError: OnErrorHandler? = nil, beforePayment: BeforePayment? = nil) {
+        self.engine = engine
+        self.onSuccess = onSuccess
+        self.onError = onError
+        self.beforePayment = beforePayment
+        
+        setEngineStateListeners()
+    }
+
+    public init(engine: PaylikeEngine, amount: PaymentAmount, onSuccess: OnSuccessHandler? = nil, onError: OnErrorHandler? = nil, beforePayment: BeforePayment? = nil) {
+        self.engine = engine
+        self.amount = amount
+        self.onError = onError
+        self.onSuccess = onSuccess
+        self.beforePayment = beforePayment
+        
+        setEngineStateListeners()
+    }
+
+    public func addPaymentAmount(_ amount: PaymentAmount) {
+        self.amount = amount
+    }
+    
+    public func addPaymentPlanDataList(_ paymentPlanDataList: [PaymentPlan]) {
+        self.paymentPlanDataList = paymentPlanDataList
+    }
+    
+    public func addPaymentUnplannedData(_ paymentUnplannedData: PaymentUnplanned) {
+        self.paymentUnplannedData = paymentUnplannedData
+    }
+    
+    public func addPaymentTestData(_ paymentTestData: PaymentTest) {
+        self.paymentTestData = paymentTestData
+    }
+    
+    public func addDescriptionPaymentData(paymentAmount: PaymentAmount?, paymentPlanDataList: [PaymentPlan]?, paymentUnplannedData: PaymentUnplanned?, paymentTestData: PaymentTest?) {
+        self.amount = amount
+        self.paymentPlanDataList = paymentPlanDataList
+        self.paymentUnplannedData = paymentUnplannedData
+        self.paymentTestData = paymentTestData
+    }
+    
+    public func addAdditionalPaymentData(textData: String?, customData: AnyEncodable?) {
+        self.paymentTextData = textData
+        self.paymentCustomData = customData
+    }
     
     func isFormValid() -> Bool {
         return isCardNumberValid && isExpiryDateValid && isCardVerifiacationCodeValid
@@ -163,7 +161,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
                 .sink(receiveValue: { shouldRenderWebView in
                     Task {
                         await MainActor.run {
-                            self.shouldRenderWebView = shouldRenderWebView
+                            self._shouldRenderWebView = shouldRenderWebView
                         }
                     }
                 })
@@ -204,6 +202,13 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
                 onError!(_engineError!)
             }
         }
+    }
+    
+    public func resetViewModelAndEngine() {
+        self.cardNumber = ""
+        self.cvc = ""
+        self.expiryDate = ""
+        engine.resetEngine()
     }
 }
 
