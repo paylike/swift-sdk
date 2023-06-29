@@ -16,36 +16,24 @@ public func FormattedTextField<Formatter: TextFieldFormatter> (placeholder: Stri
     )
 }
 
-private struct FormattedTextfieldPreviewWrapper<Formatter: TextFieldFormatter>: View {
-    @State public var value: Formatter.Value
-    
-    public init(_ placeholder: String,
-                label: String,
-                formatter: Formatter) {
-        self.placeholder = placeholder
-        self.formatter = formatter
-        self.label = label
-        _value = State(initialValue: formatter.value(from: ""))
-    }
+private struct FormattedTextfieldPreviewWrapper: View {
+    let placeholder: String = "placeholder"
+    let formatter = CardNumberFormatter()
 
-    let label: String
-    let placeholder: String
-    let formatter: Formatter
+    @State var value: String = ""
 
     public var body: some View {
-        VStack {
-            StyledTextField(label, textField: FormattedTextField(placeholder: placeholder, value: $value, formatter: formatter), isValid: true)
+        VStack(alignment: .leading) {
+            FormattedTextField(placeholder: placeholder, value: $value, formatter: formatter)
+            Text("Value: \(value)")
         }
     }
 }
 
 struct FormattedTextField_Previews: PreviewProvider {
-    static var value: String = "12345623456"
     static var previews: some View {
         VStack(alignment: .leading) {
-            FormattedTextfieldPreviewWrapper("placeholder", label: "label", formatter: CardNumberFormatter())
-            Text("Value: \(value)")
+            FormattedTextfieldPreviewWrapper()
         }
-        .environmentObject(PaylikeTheme)
     }
 }

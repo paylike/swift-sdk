@@ -36,12 +36,14 @@ struct StyledTextField_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             VStack {
+                Text("PaylikeTheme")
                 StyledTextField("Label", textField: TextField("placeholder", text: .constant("")), isValid: true)
                 StyledTextField("Label", textField: TextField("placeholder", text: .constant("lull")), isValid: true)
                 StyledTextField("Label", textField: TextField("placeholder", text: .constant("invalid")), isValid: false)
             }
             .environmentObject(PaylikeTheme)
             VStack {
+                Text("CustomTheme")
                 StyledTextField("Label", textField: TextField("placeholder", text: .constant("")), isValid: true)
                 StyledTextField("Label", textField: TextField("placeholder", text: .constant("lull")), isValid: true)
                 StyledTextField("Label", textField: TextField("placeholder", text: .constant("invalid")), isValid: false)
