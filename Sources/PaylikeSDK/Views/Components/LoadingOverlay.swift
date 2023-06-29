@@ -26,8 +26,12 @@ struct LoadingOverlay: View {
                 Rectangle()
                     .fill(backgroundGradient)
                     .cornerRadius(15)
-                SuccessAnimation(color: theme.foregroundColor, lineWidth: lineWidth, animationProgress: animationProgress)
-                    .aspectRatio(1, contentMode: ContentMode.fit)
+                if (playSuccessAnimation) {
+                    SuccessAnimation(color: theme.backgroundColor, lineWidth: lineWidth, radius: 0.2, animationProgress: animationProgress)
+                } else {
+                    LoadingAnimation(color: theme.backgroundColor, lineWidth: lineWidth, radius: 0.2 )
+                        .animation(.none)
+                }
             }
         }
     }

@@ -17,39 +17,43 @@ public struct SimplePaymentForm: View {
     }
     
     public var body: some View {
-        ZStack {
-            VStack {
-                if viewModel._errorMessage != nil, let message = viewModel._errorMessage {
-                    ErrorLog(message: message)
-                }
-                CardNumberField(cardNumber: $viewModel.cardNumber, isValid: viewModel.isCardNumberValid)
-                HStack {
-                    ExpiryDateField(expiryDate: $viewModel.expiryDate, isValid: viewModel.isExpiryDateValid)
-                    CardValidationCodeField(cvc: $viewModel.cvc, isValid: viewModel.isCardVerifiacationCodeValid)
-                }
-                PayButton(
-                    displayAmount: viewModel.payButtonDisplayAmount,
-                    submit:
-                        {
-                            #if os(iOS)
-                            hideKeyboard()
-                            #endif
-                            await viewModel.submit()
-                        },
-                    disabled: viewModel.payButtonDisabled
-                )
-                SecurePaymentLabel()
+            ZStack {
+                VStack {
+                    if viewModel._errorMessage != nil, let message = viewModel._errorMessage {
+                        ErrorLog(message: message)
+                    }
+                    CardNumberField(cardNumber: $viewModel.cardNumber, isValid: viewModel.isCardNumberValid)
+                    HStack {
+                        ExpiryDateField(expiryDate: $viewModel.expiryDate, isValid: viewModel.isExpiryDateValid)
+                        CardValidationCodeField(cvc: $viewModel.cvc, isValid: viewModel.isCardVerifiacationCodeValid)
+                    }
+                    PayButton(
+                        displayAmount: viewModel.payButtonDisplayAmount,
+                        submit:
+                            {
+#if os(iOS)
+                                hideKeyboard()
+#endif
+                                await viewModel.submit()
+                            },
+                        disabled: viewModel.payButtonDisabled
+                    )
+                    SecurePaymentLabel()
             }
-            
-            LoadingOverlay()
-                .opacity(viewModel.isLoading ? 1.0 : 0.0)
-            
+
+            if viewModel.isLoading || viewModel.playSuccessAnimation {
+                LoadingOverlay(playSuccessAnimation: viewModel.playSuccessAnimation)
+                    .frame(maxHeight: 200)
+                    .aspectRatio(contentMode: .fit)
+            }
+
             if viewModel._shouldRenderWebView {
                 viewModel.engine.webViewModel!.paylikeWebView
-                    .frame(maxWidth: .infinity, maxHeight: 400, alignment: .center)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
         }
     }
+        
 }
 
 #if os(iOS)

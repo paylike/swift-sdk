@@ -10,29 +10,26 @@ import SwiftUI
 struct SuccessAnimation: View {
     var color: Color = .blue
     var lineWidth: CGFloat = 2
-    var animationProgress = 0.0
-    @State var isRotating = 0.0
+    var duration = 0.6
+    var radius: CGFloat = 0.2
     
+    @State var animationProgress = 0.0
+    
+
     var body: some View {
             ZStack {
-                Tick()
+                Tick(shortSideLength: radius - 0.05, longSideLength: radius + 0.1)
                     .stroke(color, lineWidth: lineWidth)
                     .offset(x: 0, y: animationProgress > 0 ? 0 : -100)
                     .animation(Animation.easeOut(duration: 0.7), value: animationProgress)
                     .opacity(min(animationProgress * 20, 1))
-                    .animation(Animation.linear(duration: 0.3), value: animationProgress)
+                    .animation(Animation.linear(duration: duration/2), value: animationProgress)
                 
-                SuccessCircle(animationProgress: animationProgress)
+                SuccessCircle(startingScale: radius / (radius + 0.05), finalCircleRadiusRatio: radius + 0.05, animationProgress: animationProgress)
                     .stroke(color, lineWidth: lineWidth)
-                    .rotationEffect(.degrees(isRotating))
-                    .animation(animationProgress == 0.0 ?
-                               Animation.easeInOut(duration: 1.5).repeatForever(autoreverses: false) :
-                                Animation.easeInOut(duration: 0.6), value: [ animationProgress, isRotating ]
+                    .animation( Animation.easeInOut(duration: duration), value: animationProgress
                     )
-                    .onAppear(perform: {
-                        isRotating = 720.0
-                    })
-            }
+            }.aspectRatio(contentMode: .fit)
     }
 }
 
