@@ -1,10 +1,3 @@
-//
-//  CardNumberValidator.swift
-//  
-//
-//  Created by Székely Károly on 2023. 05. 22..
-//
-
 import Foundation
 import PaylikeLuhn
 
@@ -12,6 +5,10 @@ import PaylikeLuhn
 let CARD_NUMBER_MIN_LENGTH = 16
 let CARD_NUMBER_MAX_LENGTH = 16
 
+/// Validation method for card Numbers. Validates for card number length, for the Luhn algorithm.
+///
+/// - Returns:
+///     Bool value whether the given card number is valid.
 func validateCardNumber(cardNumber: String) -> Bool {
     let isAboveMinLength = cardNumber.count >= CARD_NUMBER_MIN_LENGTH
     let isBelowMaxLength = cardNumber.count <= CARD_NUMBER_MAX_LENGTH

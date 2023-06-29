@@ -1,10 +1,3 @@
-//
-//  ErrorLog.swift
-//  
-//
-//  Created by Székely Károly on 2023. 06. 01..
-//
-
 import SwiftUI
 
 struct ErrorLog: View {

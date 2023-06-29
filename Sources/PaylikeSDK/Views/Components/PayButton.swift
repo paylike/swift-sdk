@@ -1,16 +1,7 @@
-//
-//  PayButton.swift
-//  
-//
-//  Created by Székely Károly on 2023. 05. 10..
-//
-
 import SwiftUI
 import PaylikeClient
 
-public let defaultButtonStyle = PayButtonStyle()
-
-public struct PayButtonStyle: ButtonStyle {
+struct PayButtonStyle: ButtonStyle {
     struct StyledButton: View {
         let configuration: ButtonStyle.Configuration
         @EnvironmentObject var theme: Theme
@@ -41,7 +32,7 @@ struct PayButton: View {
     var displayAmount: String
     var submit: () async -> Void
     var disabled: Bool
-    var styling: PayButtonStyle = defaultButtonStyle
+    var styling: PayButtonStyle = PayButtonStyle()
     
     var body: some View {
         Button(action: {

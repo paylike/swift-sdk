@@ -1,13 +1,7 @@
-//
-//  PaylikeTheme.swift
-//  
-//
-//  Created by Székely Károly on 2023. 05. 10..
-//
-
 import Foundation
 import SwiftUI
 
+/// Collection of color, and theming values used by views in the SDK. You can use this class, to overwrite the default colors to your own branding
 public final class Theme : ObservableObject {
     
     public var providerIconHeight: CGFloat = 20
@@ -21,8 +15,10 @@ public final class Theme : ObservableObject {
     public var disabledColor: Color = Color("Disabled", bundle: .module)
 }
 
+/// A default ``Theme`` using the classic paylike colorset
 public let PaylikeTheme = Theme()
 
+/// An example ``Theme`` to showcase usage capabilities
 var TestCustomTheme: Theme {
     let theme = Theme()
     theme.primaryColor = .blue

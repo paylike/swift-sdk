@@ -1,12 +1,7 @@
-//
-//  SuccessAnimiation.swift
-//  
-//
-//  Created by Székely Károly on 2023. 05. 11..
-//
-
 import SwiftUI
 
+/// View of the animated success confirmation shape. Color, linewidth, and radius of the circle, as well as the animation duration can be modified.
+/// Will fit into the parent view, taking a square shape.
 struct SuccessAnimation: View {
     var color: Color = .blue
     var lineWidth: CGFloat = 2
@@ -33,7 +28,7 @@ struct SuccessAnimation: View {
     }
 }
 
-private struct SuccessAnimationPreviewWrapper: View {
+fileprivate struct SuccessAnimationPreviewWrapper: View {
     @State private var animationProgress: Double = 0.0
     
     var color: Color = .blue;

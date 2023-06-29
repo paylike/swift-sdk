@@ -1,13 +1,10 @@
-//
-//  FormattedTextField.swift
-//  
-//
-//  Created by Székely Károly on 2023. 05. 05..
-//
-
 import SwiftUI
 
-public func FormattedTextField<Formatter: TextFieldFormatter> (placeholder: String, value: Binding<Formatter.Value>, formatter: Formatter, onEditingChanged: @escaping (Bool) -> Void = { _ in }) -> TextField<Text> {
+/// Creates a TextField that converts its input to a formatted value with a generic type, and displays it as string again.
+///
+/// - Returns:
+///     A TextField with the value formatter configured
+func FormattedTextField<Formatter: TextFieldFormatter> (placeholder: String, value: Binding<Formatter.Value>, formatter: Formatter, onEditingChanged: @escaping (Bool) -> Void = { _ in }) -> TextField<Text> {
     return TextField(placeholder, text: Binding(get: {
         return formatter.displayString(for: value.wrappedValue)
     }, set: { string in
@@ -16,7 +13,7 @@ public func FormattedTextField<Formatter: TextFieldFormatter> (placeholder: Stri
     )
 }
 
-private struct FormattedTextfieldPreviewWrapper: View {
+fileprivate struct FormattedTextfieldPreviewWrapper: View {
     let placeholder: String = "placeholder"
     let formatter = CardNumberFormatter()
 

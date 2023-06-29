@@ -1,13 +1,6 @@
-//
-//  StyledTextField.swift
-//  
-//
-//  Created by Székely Károly on 2023. 05. 15..
-//
-
 import SwiftUI
 
-public struct StyledTextField<Label>: View where Label : View {
+struct StyledTextField<Label>: View where Label : View {
     @EnvironmentObject var theme: Theme
     let label: String
     let textField: TextField<Label>

@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct StyledSecureField<Label>: View where Label: View {
+struct StyledSecureField<Label>: View where Label: View {
     @EnvironmentObject var theme: Theme
     let label: String
     let secureField: SecureField<Label>
