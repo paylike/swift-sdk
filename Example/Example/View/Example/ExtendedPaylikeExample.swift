@@ -1,16 +1,10 @@
-//
-//  ExtendedPaylikeExample.swift
-//
-//  Created by Károly Székely on 2023. 06. 27..
-//
-
 import AnyCodable
 import SwiftUI
 import PaylikeEngine
 import PaylikeSDK
 import PaylikeClient
 
-
+/// Showcase encodable custom data that can be passed to the payment as additional data
 struct CustomData: Encodable {
     var email = "not-real@test.com"
     var testArray = [0, 1, 2]
@@ -19,6 +13,7 @@ struct CustomData: Encodable {
 class ExtendedExampleViewModel: ObservableObject {
     @Published var showSuccessOverlay = false
     
+    // This data can be edited in the example, and is added to the payment as additional data in the beforePayment callback
     @Published var textData = "this is a test"
     @Published var customData = CustomData()
 
@@ -34,15 +29,16 @@ class ExtendedExampleViewModel: ObservableObject {
 struct ExtendedPaylikeExample: View {
     @ObservedObject var exampleViewModel: ExtendedExampleViewModel
 
-    var viewModel: SimplePaymentFormViewModel
+    var paylikeViewModel: SimplePaymentFormViewModel
     
     init(engine: PaylikeEngine) {
+        // Create the exampleViewModel inside the init method, so the closures can be used by paylikeViewModel
         let exampleViewModel = ExtendedExampleViewModel()
-        viewModel = SimplePaymentFormViewModel(engine: engine, onSuccess: exampleViewModel.onSuccess, beforePayment: exampleViewModel.beforePayment)
+        paylikeViewModel = SimplePaymentFormViewModel(engine: engine, onSuccess: exampleViewModel.onSuccess, beforePayment: exampleViewModel.beforePayment)
         self.exampleViewModel = exampleViewModel
 
-        viewModel.addPaymentAmount(PaymentAmount(currency: .EUR, value: 30, exponent: 0))
-        viewModel.addPaymentTestData(PaymentTest())
+        paylikeViewModel.addPaymentAmount(PaymentAmount(currency: .EUR, value: 30, exponent: 0))
+        paylikeViewModel.addPaymentTestData(PaymentTest())
     }
 
     var body: some View {
@@ -51,12 +47,12 @@ struct ExtendedPaylikeExample: View {
                 Text("ADDITIONAL TEXT DATA")
                     .bold()
                 TextField<Text>("Text Data", text: $exampleViewModel.textData)
-                SimplePaymentForm(viewModel: viewModel)
+                SimplePaymentForm(viewModel: paylikeViewModel)
             }
             ExampleSuccessOverlay(showOverlay: exampleViewModel.showSuccessOverlay)
         }
         .onDisappear {
-            viewModel.resetViewModelAndEngine()
+            paylikeViewModel.resetViewModelAndEngine()
             exampleViewModel.showSuccessOverlay = false
         }
     }

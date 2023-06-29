@@ -1,13 +1,4 @@
-//
-//  ExampleWrapperView.swift
-//
-//  Created by Székely Károly on 2023. 04. 26..
-//
-
 import SwiftUI
-import PaylikeSDK
-import PaylikeEngine
-import PaylikeClient
 
 struct ExampleWrapper: View {
     let example: Example

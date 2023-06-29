@@ -1,10 +1,3 @@
-//
-//  ExampleSuccessOverlay.swift
-//  Example
-//
-//  Created by Károly Székely on 2023. 06. 29..
-//
-
 import SwiftUI
 
 struct ExampleSuccessOverlay: View {
