@@ -12,37 +12,34 @@ import PaylikeSDK
 
 
 
-class SimpleExampleClosures: ObservableObject {
-    @Published var showSuccessMessage = false
+class SimpleExampleViewModel: ObservableObject {
+    @Published var showSuccessOverlay = false
 
     func onSuccess() -> Void {
-        showSuccessMessage = true
+        showSuccessOverlay = true
     }
 }
 
 struct SimplePaylikeExample: View {
+    @ObservedObject var exampleViewModel: SimpleExampleViewModel
     var viewModel: SimplePaymentFormViewModel
-    
-    @ObservedObject var closures: SimpleExampleClosures
 
     init(engine: PaylikeEngine) {
-        let closures = SimpleExampleClosures()
-        viewModel = SimplePaymentFormViewModel(engine: engine, onSuccess: closures.onSuccess)
-        self.closures = closures
-        
-        viewModel.addPaymentAmount(PaymentAmount(currency: .EUR, value: 30, exponent: 0))
+        let exampleViewModel = SimpleExampleViewModel()
+        viewModel = SimplePaymentFormViewModel(engine: engine, amount: PaymentAmount(currency: .EUR, value: 30, exponent: 0), onSuccess: exampleViewModel.onSuccess)
+        self.exampleViewModel = exampleViewModel
+
         viewModel.addPaymentTestData(PaymentTest())
     }
 
     var body: some View {
         ZStack {
             SimplePaymentForm(viewModel: viewModel)
-            ZStack {
-                Rectangle()
-                    .fill(.white)
-                    .opacity(0.5)
-                Text("Example over, succesful transaction!").font(.headline).foregroundColor(.PaylikeGreen)
-            }.opacity(closures.showSuccessMessage ? 1.0 : 0.0)
+            ExampleSuccessOverlay(showOverlay: exampleViewModel.showSuccessOverlay)
+        }
+        .onDisappear {
+            viewModel.resetViewModelAndEngine()
+            exampleViewModel.showSuccessOverlay = false
         }
     }
 }

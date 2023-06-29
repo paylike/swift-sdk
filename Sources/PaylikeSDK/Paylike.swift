@@ -31,4 +31,5 @@ public protocol PaylikeViewModel: ObservableObject {
     func addDescriptionPaymentData(paymentAmount: PaymentAmount?, paymentPlanDataList: [PaymentPlan]?, paymentUnplannedData: PaymentUnplanned?, paymentTestData: PaymentTest?)
     
     func addAdditionalPaymentData(textData: String?, customData: AnyEncodable?)
+    func resetViewModelAndEngine()
 }

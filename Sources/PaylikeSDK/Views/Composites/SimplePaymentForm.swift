@@ -44,7 +44,7 @@ public struct SimplePaymentForm: View {
             LoadingOverlay()
                 .opacity(viewModel.isLoading ? 1.0 : 0.0)
             
-            if viewModel.shouldRenderWebView {
+            if viewModel._shouldRenderWebView {
                 viewModel.engine.webViewModel!.paylikeWebView
                     .frame(maxWidth: .infinity, maxHeight: 400, alignment: .center)
             }
