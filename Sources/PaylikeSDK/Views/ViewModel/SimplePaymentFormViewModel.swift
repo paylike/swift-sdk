@@ -33,6 +33,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
     @Published var cvc: String = "";
     
     @Published var isLoading: Bool = false
+    @Published var playSuccessAnimation: Bool = false
     
     @Published var _engineState: EngineState?
     @Published var _engineError: EngineErrorObject?
@@ -192,6 +193,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
     func onStateChange(state: EngineState) {
         if state == EngineState.SUCCESS {
             isLoading = false
+            playSuccessAnimation = true
             if onSuccess != nil {
                 onSuccess!()
             }
@@ -208,6 +210,8 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
         self.cardNumber = ""
         self.cvc = ""
         self.expiryDate = ""
+        self.isLoading = false
+        self.playSuccessAnimation = false
         engine.resetEngine()
     }
 }
