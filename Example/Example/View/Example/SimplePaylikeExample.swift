@@ -41,9 +41,6 @@ struct SimplePaylikeExample: View {
             viewModel.resetViewModelAndEngine()
             exampleViewModel.showSuccessOverlay = false
         }
-        .onAppear {
-            exampleViewModel.showSuccessOverlay = false
-        }
     }
 }
 

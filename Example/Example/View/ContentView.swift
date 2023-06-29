@@ -9,7 +9,7 @@ import PaylikeSDK
 
 struct ContentView: View {
     var body: some View {
-        ExampleList(examples: getExampleList(engine: getEngine()))
+        ExampleList(examples: getExampleList())
             .environmentObject(PaylikeTheme)
     }
 }

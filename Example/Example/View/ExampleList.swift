@@ -21,6 +21,6 @@ struct ExampleList: View {
 
 struct ExampleListView_Previews: PreviewProvider {
     static var previews: some View {
-        ExampleList(examples: getExampleList(engine: getEngine()))
+        ExampleList(examples: getExampleList())
     }
 }
