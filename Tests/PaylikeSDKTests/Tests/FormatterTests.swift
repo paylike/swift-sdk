@@ -40,7 +40,7 @@ final class FormatterTests: XCTestCase {
     }
     
     func test_CardVerificationCodeFormatter() throws {
-        let formatter = CardValidationCodeFormatter()
+        let formatter = CardVerificationCodeFormatter()
 
         let inputStrings = [
             0: "",

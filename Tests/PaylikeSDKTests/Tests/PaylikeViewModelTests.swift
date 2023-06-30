@@ -55,7 +55,7 @@ final class PaylikeViewModelTests: XCTestCase {
             
             XCTAssertEqual(EngineState.WAITING_FOR_INPUT, state)
             XCTAssertNil(viewModel._engineError)
-            XCTAssertNil(viewModel._errorMessage)
+            XCTAssertNil(viewModel.errorMessage)
             initExpectation.fulfill()
             
         }))
