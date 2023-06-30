@@ -1,8 +1,6 @@
 # Paylike's Swift SDK
 
-<a href="https://github.com/paylike/swift-sdk/actions/workflows/build_test.yml" target="_blank">
-    <img src="https://github.com/paylike/swift-sdk/actions/workflows/build_test.yml/badge.svg?branch=main" />
-</a>
+[![build_test](/../../actions/workflows/build_test.yml/badge.svg?branch=main)](/../../actions/workflows/build_test.yml)
 
 This library includes the high level components providing complete payment forms to use the Paylike ecosystem.  
 If you are looking for our core elements required to implement payment flow towards the API, [check here](https://github.com/paylike/swift-engine).
