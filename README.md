@@ -1,10 +1,4 @@
 # Paylike's Swift SDK
-<a href="https://jitpack.io/#paylike/swift-sdk" target="_blank">
-    <img src="https://jitpack.io/v/paylike/swift-sdk.svg" />
-</a>
-<a href="https://github.com/paylike/swift-sdk/actions/workflows/AssembleOnMain.yml" target="_blank">
-    <img src="https://github.com/paylike/swift-sdk/actions/workflows/AssembleOnMain.yml/badge.svg?branch=main" />
-</a>
 
 This library includes the high level components providing complete payment forms to use the Paylike ecosystem.  
 If you are looking for our core elements required to implement payment flow towards the API, [check here](https://github.com/paylike/swift-engine).
@@ -24,7 +18,7 @@ If you are looking for our core elements required to implement payment flow towa
     - [Simple Paymment Form](#simple-payment-form)
       - [Using Custom Themes](#using-custom-themes)
       - [Extending with additional data](#extending-with-additional-data)
-  - [Configurable Closures](#Configurable Closures)
+  - [Configurable Closures](#configurable-closures)
     - [onSuccess](#onsuccess)
     - [onError](#onerror)
     - [beforePayment](#beforepayment)
@@ -49,7 +43,7 @@ To get more familiar with our server API you can find here the [official documen
 
 ### Paylike Swift Ecosystem
 
-<img title="Paylike Swift Ecosystem" alt="System architecture diagram of the Paylike Swift Ecosystem" src="readme_res/SysArch.png">
+<img title="Paylike Swift Ecosystem" alt="System architecture diagram of the Paylike Swift Ecosystem" src="readme-res/SysArch.png">
 
 ## Usage
 ---
@@ -227,7 +221,7 @@ Use the `beforePayment` closure to set additional custom data on the Payment, wh
 * customData: any Encodable data.
 
 ExtendedPaylikeExample.swift
-```
+```swift
 import AnyCodable
 import SwiftUI
 import PaylikeEngine
