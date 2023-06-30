@@ -102,8 +102,8 @@ public final class SimplePaymentFormViewModel: PaylikeViewModel {
         setEngineStateListeners()
     }
 
-    public func addPaymentAmount(_ amount: PaymentAmount) {
-        self.amount = amount
+    public func addPaymentAmount(_ paymentAmount: PaymentAmount) {
+        self.amount = paymentAmount
     }
     
     public func addPaymentPlanDataList(_ paymentPlanDataList: [PaymentPlan]) {
@@ -119,7 +119,7 @@ public final class SimplePaymentFormViewModel: PaylikeViewModel {
     }
     
     public func addDescriptionPaymentData(paymentAmount: PaymentAmount?, paymentPlanDataList: [PaymentPlan]?, paymentUnplannedData: PaymentUnplanned?, paymentTestData: PaymentTest?) {
-        self.amount = amount
+        self.amount = paymentAmount
         self.paymentPlanDataList = paymentPlanDataList
         self.paymentUnplannedData = paymentUnplannedData
         self.paymentTestData = paymentTestData
