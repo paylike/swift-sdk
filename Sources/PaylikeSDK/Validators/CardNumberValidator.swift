@@ -8,7 +8,10 @@
 import Foundation
 import PaylikeLuhn
 
-// TODO update with real min max values
+// TODO: update with real min max values
+// TODO: Add only digits validation
+// TODO: Add card provider regex validation includint number lengts (16-19)
+
 let CARD_NUMBER_MIN_LENGTH = 16
 let CARD_NUMBER_MAX_LENGTH = 16
 

@@ -8,6 +8,8 @@
 import Foundation
 import PaylikeClient
 
+// TODO: Add only digits validation
+
 func validateExpiryDate(cardExpiry: CardExpiry?) -> Bool {
     let isFormatValid = cardExpiry != nil
     if isFormatValid {

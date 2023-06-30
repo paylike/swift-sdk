@@ -7,6 +7,8 @@
 
 import Foundation
 
+// TODO: Add only digits validation
+
 let CARD_VERIFICATION_CODE_LENGTH = 3
 
 func validateCardVerificationCode(cvc: String) -> Bool {
