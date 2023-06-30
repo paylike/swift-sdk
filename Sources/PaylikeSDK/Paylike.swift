@@ -14,7 +14,7 @@ public typealias PaylikeError = EngineErrorObject
 
 public typealias OnSuccessHandler = () -> Void
 public typealias OnErrorHandler = (_ error: PaylikeError) -> Void
-public typealias BeforePayment = (_ engine: PaylikeEngine,
+public typealias BeforePayment = (_ engine: any Engine,
                                   _ cardNumber: String,
                                   _ cvc: String,
                                   _ cardExpiry: CardExpiry,
@@ -34,7 +34,7 @@ public protocol PaylikeViewModel: ObservableObject {
     ///   - onError: closure called when the engine switches to ERROR state. It is called with the error from the PaylikeEngine as its first parameter
     ///   - beforePayment: closure called after the user hits the PaymentButton, and the essential payment information was set.
     ///
-    init(engine: PaylikeEngine, onSuccess: OnSuccessHandler?, onError: OnErrorHandler?, beforePayment: BeforePayment?)
+    init(engine: any Engine, onSuccess: OnSuccessHandler?, onError: OnErrorHandler?, beforePayment: BeforePayment?)
 
     /// Sets PaymentAmount in the viewModel. It will be set in the engine before starting the Payment process
     func addPaymentAmount(_ amount: PaymentAmount)
@@ -47,6 +47,7 @@ public protocol PaylikeViewModel: ObservableObject {
     func addDescriptionPaymentData(paymentAmount: PaymentAmount?, paymentPlanDataList: [PaymentPlan]?, paymentUnplannedData: PaymentUnplanned?, paymentTestData: PaymentTest?)
     /// Sets Additional Payment Data in the viewModel. It will be set in the engine before starting the Payment process
     func addAdditionalPaymentData(textData: String?, customData: AnyEncodable?)
+
     /// Resets internal values of the viewModel, and the Engine.
     func resetViewModelAndEngine()
 }

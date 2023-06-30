@@ -8,8 +8,8 @@ import Combine
 ///
 /// Use closures to catch the success and error states of the flow. You can inject your own functionality before the payment process starts, in order to set custom data, or do third party logic.
 /// You can also reset the view model and the engine after a flow to avoid impossible states.
-public class SimplePaymentFormViewModel: PaylikeViewModel {
-    @Published var engine: PaylikeEngine
+public final class SimplePaymentFormViewModel: PaylikeViewModel {
+    @Published var engine: any Engine
     
     private var onSuccess: OnSuccessHandler?
     private var onError: OnErrorHandler?
@@ -93,7 +93,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
     ///   - onError: closure called when the engine switches to ERROR state. It is called with the error from the PaylikeEngine as its first parameter
     ///   - beforePayment: closure called after the user hits the PaymentButton, and the essential payment information was set.
     ///   
-    public required init(engine: PaylikeEngine, onSuccess: OnSuccessHandler? = nil, onError: OnErrorHandler? = nil, beforePayment: BeforePayment? = nil) {
+    public required init(engine: any Engine, onSuccess: OnSuccessHandler? = nil, onError: OnErrorHandler? = nil, beforePayment: BeforePayment? = nil) {
         self.engine = engine
         self.onSuccess = onSuccess
         self.onError = onError
@@ -101,6 +101,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
         
         setEngineStateListeners()
     }
+
 
     /// Initializer with default parameters and amount. It is preferable to set the PaymentAmount as soon as possible, so the PaymentButton can show the amount to the user.
     ///
@@ -111,7 +112,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
     ///   - onError: closure called when the engine switches to ERROR state. It is called with the error from the PaylikeEngine as its first parameter
     ///   - beforePayment: closure called after the user hits the PaymentButton, and the essential payment information was set.
     ///
-    public init(engine: PaylikeEngine, amount: PaymentAmount, onSuccess: OnSuccessHandler? = nil, onError: OnErrorHandler? = nil, beforePayment: BeforePayment? = nil) {
+    public init(engine: any Engine, amount: PaymentAmount, onSuccess: OnSuccessHandler? = nil, onError: OnErrorHandler? = nil, beforePayment: BeforePayment? = nil) {
         self.engine = engine
         self.amount = amount
         self.onError = onError
@@ -121,8 +122,8 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
         setEngineStateListeners()
     }
 
-    public func addPaymentAmount(_ amount: PaymentAmount) {
-        self.amount = amount
+    public func addPaymentAmount(_ paymentAmount: PaymentAmount) {
+        self.amount = paymentAmount
     }
     
     public func addPaymentPlanDataList(_ paymentPlanDataList: [PaymentPlan]) {
@@ -138,7 +139,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
     }
     
     public func addDescriptionPaymentData(paymentAmount: PaymentAmount?, paymentPlanDataList: [PaymentPlan]?, paymentUnplannedData: PaymentUnplanned?, paymentTestData: PaymentTest?) {
-        self.amount = amount
+        self.amount = paymentAmount
         self.paymentPlanDataList = paymentPlanDataList
         self.paymentUnplannedData = paymentUnplannedData
         self.paymentTestData = paymentTestData
@@ -189,7 +190,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
     
     // Set all paymentData data known by the viewModel to the engine. Called after pressing the PaymentButton, but before the `beforePayment` closure
     func setEnginePaymentData() async -> Void {
-        await engine.addEssentialPaymentData(cardNumber: self.cardNumber, cvc: self.cvc, expiry: self.cardExpiry!)
+        await engine.addEssentialPaymentData(cardNumber: self.cardNumber, cvc: self.cvc, month: self.cardExpiry!.month, year: self.cardExpiry!.year)
         engine.addDescriptionPaymentData(paymentAmount: self.amount, paymentPlanDataList: self.paymentPlanDataList, paymentUnplannedData: self.paymentUnplannedData, paymentTestData: self.paymentTestData)
         engine.addAdditionalPaymentData(textData: paymentTextData, customData: paymentCustomData)
     }

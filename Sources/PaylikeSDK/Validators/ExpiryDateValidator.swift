@@ -1,6 +1,8 @@
 import Foundation
 import PaylikeClient
 
+// TODO: Add only digits validation
+
 /// Validation method for card expiry date. Validates that the date is not in the future, and that the cardExpiry struct can be constructed in the correct format.
 ///
 /// - Returns:
