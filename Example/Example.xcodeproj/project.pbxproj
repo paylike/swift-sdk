@@ -20,9 +20,6 @@
 		B1F84D2C2A4D62A600C3A38C /* ExampleSuccessOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F84D2B2A4D62A600C3A38C /* ExampleSuccessOverlay.swift */; };
 		F81EF07C29F121730067301F /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81EF07B29F121730067301F /* ExampleApp.swift */; };
 		F81EF08029F121750067301F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F81EF07F29F121750067301F /* Assets.xcassets */; };
-		F81EF08329F121750067301F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F81EF08229F121750067301F /* Preview Assets.xcassets */; };
-		F81EF08529F121750067301F /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81EF08429F121750067301F /* Persistence.swift */; };
-		F81EF08829F121750067301F /* Example.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F81EF08629F121750067301F /* Example.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,9 +36,6 @@
 		F81EF07829F121730067301F /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F81EF07B29F121730067301F /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		F81EF07F29F121750067301F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F81EF08229F121750067301F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		F81EF08429F121750067301F /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		F81EF08729F121750067301F /* Example.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Example.xcdatamodel; sourceTree = "<group>"; };
 		F83E559B29F8008C002EEE77 /* Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Example.entitlements; sourceTree = "<group>"; };
 		F855936829F12BCA00357B78 /* swift-sdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "swift-sdk"; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,20 +110,9 @@
 				F83E559B29F8008C002EEE77 /* Example.entitlements */,
 				F81EF07B29F121730067301F /* ExampleApp.swift */,
 				F81EF07F29F121750067301F /* Assets.xcassets */,
-				F81EF08429F121750067301F /* Persistence.swift */,
-				F81EF08629F121750067301F /* Example.xcdatamodeld */,
-				F81EF08129F121750067301F /* Preview Content */,
 				B179EA5F2A011CD300CE12F9 /* Model */,
 			);
 			path = Example;
-			sourceTree = "<group>";
-		};
-		F81EF08129F121750067301F /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				F81EF08229F121750067301F /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		F81EF0AA29F121A40067301F /* Packages */ = {
@@ -208,7 +191,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F81EF08329F121750067301F /* Preview Assets.xcassets in Resources */,
 				F81EF08029F121750067301F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -224,9 +206,7 @@
 				B1F84D2C2A4D62A600C3A38C /* ExampleSuccessOverlay.swift in Sources */,
 				B1B714B82A4324BA00E33AA9 /* Engine.swift in Sources */,
 				B179EA5E2A011B9C00CE12F9 /* Example.swift in Sources */,
-				F81EF08829F121750067301F /* Example.xcdatamodeld in Sources */,
 				B179EA652A011D3100CE12F9 /* ExampleWrapper.swift in Sources */,
-				F81EF08529F121750067301F /* Persistence.swift in Sources */,
 				B179EA672A011D3100CE12F9 /* ContentView.swift in Sources */,
 				B1B714BB2A4ADF5400E33AA9 /* ExtendedPaylikeExample.swift in Sources */,
 				F81EF07C29F121730067301F /* ExampleApp.swift in Sources */,
@@ -450,19 +430,6 @@
 			productName = PaylikeSDK;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		F81EF08629F121750067301F /* Example.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				F81EF08729F121750067301F /* Example.xcdatamodel */,
-			);
-			currentVersion = F81EF08729F121750067301F /* Example.xcdatamodel */;
-			path = Example.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = F81EF07029F121730067301F /* Project object */;
 }

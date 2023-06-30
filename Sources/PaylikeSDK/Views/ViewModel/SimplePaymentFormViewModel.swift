@@ -93,7 +93,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
     ///   - onError: closure called when the engine switches to ERROR state. It is called with the error from the PaylikeEngine as its first parameter
     ///   - beforePayment: closure called after the user hits the PaymentButton, and the essential payment information was set.
     ///   
-    required public init(engine: PaylikeEngine, onSuccess: OnSuccessHandler? = nil, onError: OnErrorHandler? = nil, beforePayment: BeforePayment? = nil) {
+    public required init(engine: PaylikeEngine, onSuccess: OnSuccessHandler? = nil, onError: OnErrorHandler? = nil, beforePayment: BeforePayment? = nil) {
         self.engine = engine
         self.onSuccess = onSuccess
         self.onError = onError

@@ -1,4 +1,3 @@
-import Foundation
 import SwiftUI
 
 /// Collection of color, and theming values used by views in the SDK. You can use this class, to overwrite the default colors to your own branding
