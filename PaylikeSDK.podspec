@@ -16,5 +16,8 @@ Pod::Spec.new do |s|
       :tag => s.version.to_s
   }
   s.source_files = 'Sources/PaylikeSDK/**/*'
+  s.resource_bundles = {
+    'PaylikeSDK' => ['Sources/PaylikeSDK/Resources/**']
+  }
   s.dependency 'PaylikeEngine'
 end
