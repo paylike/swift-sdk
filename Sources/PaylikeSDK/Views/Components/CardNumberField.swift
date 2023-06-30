@@ -1,23 +1,15 @@
-//
-//  CardNumberField.swift
-//  
-//
-//  Created by Székely Károly on 2023. 05. 04..
-//
-
 import SwiftUI
 
-struct CardNumberFieldViewModel {
-    
-}
-
+/// Formatted Card Number Field which wraps a TextField underneath. It is styled according to the ``Theme`` defined in the environment
 struct CardNumberField: View {
     @EnvironmentObject var theme: Theme
     @Binding public var cardNumber: String
     public var isValid: Bool
     @State public var isEditing: Bool = false
     
+    /// Placeholder for the internal text field
     let placeholder = "0000 0000 0000 0000"
+    /// Label associated with the text field
     let label = "Card number"
     
     var body: some View {

@@ -1,10 +1,10 @@
-
 import Foundation
 import SwiftUI
 import PaylikeEngine
 
-// Create the list of examples. An exmaple is a view with a title and detailed description
-// Every Example uses a different Engine instance, so changes in the engine state do not interfere with other examples
+/// Create the list of examples. An exmaple is a view with a title and detailed description
+///
+/// Every Example uses a different Engine instance, so changes in the engine state do not interfere with other examples
 func getExampleList() -> [Example] {
     let examples: [Example] = [
         Example(id: "1", title: "Paylike Style example", details: "A custom-made widget with Paylike styling boosts customer trust in your application\'s payment flow. This widget has the same capabilities as the Simple White Label form but uses Paylike theme and predefined Paylike style UI elements.", view: AnyView(SimplePaylikeExample(engine: getEngine()))),

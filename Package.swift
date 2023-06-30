@@ -10,7 +10,7 @@ let package = Package(
             name: "PaylikeSDK", targets: ["PaylikeSDK"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/kocsislaci/swift-engine", branch: "feature/initial-release"),
+        .package(url: "https://github.com/paylike/swift-engine", .upToNextMajor(from: "0.1.1")),
         .package(url: "https://github.com/httpswift/swifter", .upToNextMajor(from: "1.5.0"))
     ],
     targets: [

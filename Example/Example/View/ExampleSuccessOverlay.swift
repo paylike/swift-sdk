@@ -1,10 +1,3 @@
-//
-//  ExampleSuccessOverlay.swift
-//  Example
-//
-//  Created by Károly Székely on 2023. 06. 29..
-//
-
 import SwiftUI
 
 struct ExampleSuccessOverlay: View {
@@ -14,7 +7,7 @@ struct ExampleSuccessOverlay: View {
             Rectangle()
                 .fill(.white)
                 .opacity(0.5)
-            Color.PaylikeGreen.frame(maxWidth: .infinity, maxHeight: 22)
+            Color.accentColor.frame(maxWidth: .infinity, maxHeight: 22)
             Text("Example over, succesful transaction!").font(.headline).foregroundColor(.white)
         }.opacity(showOverlay ? 1.0 : 0.0)
     }

@@ -1,13 +1,8 @@
-//
-//  CardValidationCodeFormatter.swift
-//  
-//
-//  Created by Székely Károly on 2023. 05. 09..
-//
-
 import Foundation
 
-struct CardValidationCodeFormatter: TextFieldFormatter {
+/// Formatter for card verification code string values, displaying the digits, with a maximum length.
+/// Only allows decimal digits, omits everything else from the value.
+struct CardVerificationCodeFormatter: TextFieldFormatter {
     typealias Value = String
     
     func displayString(for value: String) -> String {
