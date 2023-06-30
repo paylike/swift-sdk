@@ -1,5 +1,9 @@
 # Paylike's Swift SDK
 
+<a href="https://github.com/paylike/swift-sdk/actions/workflows/build_test.yml" target="_blank">
+    <img src="https://github.com/paylike/swift-sdk/actions/workflows/build_test.yml/badge.svg?branch=main" />
+</a>
+
 This library includes the high level components providing complete payment forms to use the Paylike ecosystem.  
 If you are looking for our core elements required to implement payment flow towards the API, [check here](https://github.com/paylike/swift-engine).
 
@@ -9,7 +13,7 @@ If you are looking for our core elements required to implement payment flow towa
   - [Table of Contents](#table-of-contents)
   - [General Info](#general-info)
     - [Purpose of this library](#purpose-of-this-library)
-    - [# Used Technologies, and iOS target](#used-technologies-and-ios-target)
+    - [Used Technologies, and iOS target](#used-technologies-and-ios-target)
     - [Paylike API Reference](#paylike-api-reference)
     - [Paylike Swift Ecosystem](#paylike-swift-ecosystem)
   - [Usage](#usage)
@@ -77,7 +81,7 @@ let package = Package(
 
 ## TL;DR
 ---
-Don't forget to create your **OWN** API key (merchant ID) for the Paylike ecosystem. See: https://paylike.io/platforms/integration & https://github.com/paylike/api-docs#getting-an-api-key
+Don't forget to create your **OWN** API key (merchant ID) for the Paylike ecosystem. See: [Integration Docs](https://paylike.io/platforms/integration) & [Getting an API key](https://github.com/paylike/api-docs#getting-an-api-key)
 
 ```swift
 import SwiftUI
