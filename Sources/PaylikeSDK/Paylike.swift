@@ -14,7 +14,7 @@ public typealias PaylikeError = EngineErrorObject
 
 public typealias OnSuccessHandler = () -> Void
 public typealias OnErrorHandler = (_ error: PaylikeError) -> Void
-public typealias BeforePayment = (_ engine: PaylikeEngine,
+public typealias BeforePayment = (_ engine: any Engine,
                                   _ cardNumber: String,
                                   _ cvc: String,
                                   _ cardExpiry: CardExpiry,
@@ -22,7 +22,7 @@ public typealias BeforePayment = (_ engine: PaylikeEngine,
                                   _ customData: AnyEncodable?) -> Void
 
 public protocol PaylikeViewModel: ObservableObject {
-    init(engine: PaylikeEngine, onSuccess: OnSuccessHandler?, onError: OnErrorHandler?, beforePayment: BeforePayment?)
+    init(engine: any Engine, onSuccess: OnSuccessHandler?, onError: OnErrorHandler?, beforePayment: BeforePayment?)
 
     func addPaymentAmount(_ amount: PaymentAmount)
     func addPaymentPlanDataList(_ paymentPlanDataList: [PaymentPlan])
@@ -31,5 +31,6 @@ public protocol PaylikeViewModel: ObservableObject {
     func addDescriptionPaymentData(paymentAmount: PaymentAmount?, paymentPlanDataList: [PaymentPlan]?, paymentUnplannedData: PaymentUnplanned?, paymentTestData: PaymentTest?)
     
     func addAdditionalPaymentData(textData: String?, customData: AnyEncodable?)
+    
     func resetViewModelAndEngine()
 }

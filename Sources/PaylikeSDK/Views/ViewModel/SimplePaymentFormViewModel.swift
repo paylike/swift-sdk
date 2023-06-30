@@ -12,8 +12,8 @@ import PaylikeClient
 import Combine
 
 
-public class SimplePaymentFormViewModel: PaylikeViewModel {
-    @Published var engine: PaylikeEngine
+public final class SimplePaymentFormViewModel: PaylikeViewModel {
+    @Published var engine: any Engine
     
     private var onSuccess: OnSuccessHandler?
     private var onError: OnErrorHandler?
@@ -83,7 +83,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
         return validateCardVerificationCode(cvc: cvc)
     }
 
-    public required init(engine: PaylikeEngine, onSuccess: OnSuccessHandler? = nil, onError: OnErrorHandler? = nil, beforePayment: BeforePayment? = nil) {
+    public required init(engine: any Engine, onSuccess: OnSuccessHandler? = nil, onError: OnErrorHandler? = nil, beforePayment: BeforePayment? = nil) {
         self.engine = engine
         self.onSuccess = onSuccess
         self.onError = onError
@@ -92,7 +92,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
         setEngineStateListeners()
     }
 
-    public init(engine: PaylikeEngine, amount: PaymentAmount, onSuccess: OnSuccessHandler? = nil, onError: OnErrorHandler? = nil, beforePayment: BeforePayment? = nil) {
+    public init(engine:  any Engine, amount: PaymentAmount, onSuccess: OnSuccessHandler? = nil, onError: OnErrorHandler? = nil, beforePayment: BeforePayment? = nil) {
         self.engine = engine
         self.amount = amount
         self.onError = onError
@@ -169,7 +169,7 @@ public class SimplePaymentFormViewModel: PaylikeViewModel {
     }
     
     func setEnginePaymentData() async -> Void {
-        await engine.addEssentialPaymentData(cardNumber: self.cardNumber, cvc: self.cvc, expiry: self.cardExpiry!)
+        await engine.addEssentialPaymentData(cardNumber: self.cardNumber, cvc: self.cvc, month: self.cardExpiry!.month, year: self.cardExpiry!.year)
         engine.addDescriptionPaymentData(paymentAmount: self.amount, paymentPlanDataList: self.paymentPlanDataList, paymentUnplannedData: self.paymentUnplannedData, paymentTestData: self.paymentTestData)
         engine.addAdditionalPaymentData(textData: paymentTextData, customData: paymentCustomData)
     }
