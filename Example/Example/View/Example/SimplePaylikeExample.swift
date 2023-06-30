@@ -1,16 +1,8 @@
-//
-//  SimplePaylikeExample.swift
-//
-//  Created by Károly Székely on 2023. 06. 20..
-//
-
 import SwiftUI
 import Foundation
 import PaylikeClient
 import PaylikeEngine
 import PaylikeSDK
-
-
 
 class SimpleExampleViewModel: ObservableObject {
     @Published var showSuccessOverlay = false
@@ -22,23 +14,24 @@ class SimpleExampleViewModel: ObservableObject {
 
 struct SimplePaylikeExample: View {
     @ObservedObject var exampleViewModel: SimpleExampleViewModel
-    var viewModel: SimplePaymentFormViewModel
+    var paylikeViewModel: SimplePaymentFormViewModel
 
     init(engine: PaylikeEngine) {
+        // Create the exampleViewModel inside the init method, so the closures can be used by paylikeViewModel
         let exampleViewModel = SimpleExampleViewModel()
-        viewModel = SimplePaymentFormViewModel(engine: engine, amount: PaymentAmount(currency: .EUR, value: 30, exponent: 0), onSuccess: exampleViewModel.onSuccess)
+        paylikeViewModel = SimplePaymentFormViewModel(engine: engine, amount: PaymentAmount(currency: .EUR, value: 30, exponent: 0), onSuccess: exampleViewModel.onSuccess)
         self.exampleViewModel = exampleViewModel
 
-        viewModel.addPaymentTestData(PaymentTest())
+        paylikeViewModel.addPaymentTestData(PaymentTest())
     }
 
     var body: some View {
         ZStack {
-            SimplePaymentForm(viewModel: viewModel)
+            SimplePaymentForm(viewModel: paylikeViewModel)
             ExampleSuccessOverlay(showOverlay: exampleViewModel.showSuccessOverlay)
         }
         .onDisappear {
-            viewModel.resetViewModelAndEngine()
+            paylikeViewModel.resetViewModelAndEngine()
             exampleViewModel.showSuccessOverlay = false
         }
     }

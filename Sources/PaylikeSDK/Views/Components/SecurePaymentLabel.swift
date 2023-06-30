@@ -1,12 +1,6 @@
-//
-//  SecurePaymentLabel.swift
-//  
-//
-//  Created by Székely Károly on 2023. 05. 11..
-//
-
 import SwiftUI
 
+/// Branding component meant to grow customer trust
 struct SecurePaymentLabel: View {
     @EnvironmentObject var theme: Theme
     

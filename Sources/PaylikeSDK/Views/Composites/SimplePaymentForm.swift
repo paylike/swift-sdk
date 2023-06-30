@@ -1,14 +1,8 @@
-//
-//  SimplePaymentForm.swift
-//  
-//
-//  Created by Székely Károly on 2023. 05. 10..
-//
-
 import SwiftUI
 import PaylikeClient
 import PaylikeEngine
 
+/// Simple card Payment form. Uses ``SimplePaymentFormViewModel`` as view model. Consists of card payment forms and a payment button. Will show error messages, loading state, and will Render WebView when needed. In case of a succesful payment flow, a success overlay will be shown, redirection should be solved via the viewModel closures.
 public struct SimplePaymentForm: View {
     @ObservedObject private var viewModel: SimplePaymentFormViewModel
     
@@ -19,21 +13,22 @@ public struct SimplePaymentForm: View {
     public var body: some View {
             ZStack {
                 VStack {
-                    if viewModel._errorMessage != nil, let message = viewModel._errorMessage {
+                    if viewModel.errorMessage != nil, let message = viewModel.errorMessage {
                         ErrorLog(message: message)
                     }
                     CardNumberField(cardNumber: $viewModel.cardNumber, isValid: viewModel.isCardNumberValid)
                     HStack {
                         ExpiryDateField(expiryDate: $viewModel.expiryDate, isValid: viewModel.isExpiryDateValid)
-                        CardValidationCodeField(cvc: $viewModel.cvc, isValid: viewModel.isCardVerifiacationCodeValid)
+                        CardVerificationCodeField(cvc: $viewModel.cvc, isValid: viewModel.isCardVerifiacationCodeValid)
                     }
                     PayButton(
                         displayAmount: viewModel.payButtonDisplayAmount,
                         submit:
                             {
-#if os(iOS)
+                                /// Keyboard functionality is not supported for the target macOs version
+                                #if os(iOS)
                                 hideKeyboard()
-#endif
+                                #endif
                                 await viewModel.submit()
                             },
                         disabled: viewModel.payButtonDisabled

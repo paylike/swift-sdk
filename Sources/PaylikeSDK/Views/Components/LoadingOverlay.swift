@@ -1,10 +1,3 @@
-//
-//  LoadingOverlay.swift
-//  
-//
-//  Created by Székely Károly on 2023. 05. 31..
-//
-
 import SwiftUI
 
 struct LoadingOverlay: View {
@@ -37,7 +30,7 @@ struct LoadingOverlay: View {
     }
 }
 
-private struct LandingOverlayPreviewWrapperView: View {
+fileprivate struct LandingOverlayPreviewWrapperView: View {
     @State private var startSuccess = false;
     
     var body: some View {

@@ -1,16 +1,13 @@
-//
-//  Tick.swift
-//  
-//
-//  Created by Székely Károly on 2023. 06. 01..
-//
-
 import SwiftUI
 import Foundation
 
+/// Shape of a tick or checkmark for the sucecss animation, drawn inside a square that takes the width of the parent view. The short and long side of the tick, and a vertical offset from the center can be configured
 struct Tick: Shape {
+    /// Short side of the tick relative to the full width
     var shortSideLength = 0.15
+    /// Long side of the tick relative to the full width
     var longSideLength = 0.3
+    /// Vertical offset of the center of the tick relative to full height.
     var centerOffset = 0.1
     
     func path(in rect: CGRect) -> Path {

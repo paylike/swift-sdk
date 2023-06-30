@@ -1,6 +1,10 @@
 import SwiftUI
 
-public func FormattedSecureField<Formatter: TextFieldFormatter> (placeholder: String, value: Binding<Formatter.Value>, formatter: Formatter) -> SecureField<Text> {
+/// Creates a SecureField that converts its input to a formatted value with a generic type, and displays it as string again.
+///
+/// - Returns:
+///     A SecureField with the value formatter configured
+func FormattedSecureField<Formatter: TextFieldFormatter> (placeholder: String, value: Binding<Formatter.Value>, formatter: Formatter) -> SecureField<Text> {
     return SecureField(placeholder, text: Binding(get: {
         return formatter.displayString(for: value.wrappedValue)
     }, set: { string in
@@ -9,9 +13,9 @@ public func FormattedSecureField<Formatter: TextFieldFormatter> (placeholder: St
     )
 }
 
-private struct FormattedSecureFieldPreviewWrapper: View {
+fileprivate struct FormattedSecureFieldPreviewWrapper: View {
     let placeholder: String = "placeholder"
-    let formatter = CardValidationCodeFormatter()
+    let formatter = CardVerificationCodeFormatter()
     
     @State var value: String = ""
 

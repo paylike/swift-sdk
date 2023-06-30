@@ -1,13 +1,7 @@
-//
-//  CardProviderIcon.swift
-//  
-//
-//  Created by Laszlo Kocsis on 2023. 06. 12..
-//
-
 import Foundation
 import SwiftUI
 
+/// Icon associated with the Card Provider of the given card Number in the ``CardNumberField`` view
 struct CardProviderIcon: View {
     public let cardNumber: String
     public let height: CGFloat
@@ -45,7 +39,7 @@ fileprivate func calculateCardProviderFromNumber(number: String) -> SupportedCar
     return result
 }
 
-struct CardProviderIconPreviewWrapperView: View {
+fileprivate struct CardProviderIconPreviewWrapperView: View {
     @State var height: CGFloat = 20
     
     var body: some View {
